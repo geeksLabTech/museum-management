@@ -1,0 +1,162 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace museum_management.Migrations
+{
+    public partial class InitialCreate : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Artwork",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Author = table.Column<string>(type: "TEXT", nullable: true),
+                    EconomicValue = table.Column<int>(type: "INTEGER", nullable: false),
+                    Period = table.Column<string>(type: "TEXT", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EntryDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Artwork", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Museum",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Museum", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Picture",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Style = table.Column<string>(type: "TEXT", nullable: true),
+                    Technique = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Picture", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Picture_Artwork_Id",
+                        column: x => x.Id,
+                        principalTable: "Artwork",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Restauration",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    ArtworkId = table.Column<int>(type: "INTEGER", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Restauration", x => new { x.Id, x.ArtworkId });
+                    table.ForeignKey(
+                        name: "FK_Restauration_Artwork_ArtworkId",
+                        column: x => x.ArtworkId,
+                        principalTable: "Artwork",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sculpture",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Style = table.Column<string>(type: "TEXT", nullable: false),
+                    Material = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sculpture", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sculpture_Artwork_Id",
+                        column: x => x.Id,
+                        principalTable: "Artwork",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LendingToMuseum",
+                columns: table => new
+                {
+                    ArtworkId = table.Column<int>(type: "INTEGER", nullable: false),
+                    MuseumId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Amount = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsFinished = table.Column<bool>(type: "INTEGER", nullable: false),
+                    PeriodInDays = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LendingToMuseum", x => new { x.ArtworkId, x.MuseumId });
+                    table.ForeignKey(
+                        name: "FK_LendingToMuseum_Artwork_ArtworkId",
+                        column: x => x.ArtworkId,
+                        principalTable: "Artwork",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LendingToMuseum_Museum_MuseumId",
+                        column: x => x.MuseumId,
+                        principalTable: "Museum",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LendingToMuseum_MuseumId",
+                table: "LendingToMuseum",
+                column: "MuseumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Restauration_ArtworkId",
+                table: "Restauration",
+                column: "ArtworkId");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "LendingToMuseum");
+
+            migrationBuilder.DropTable(
+                name: "Picture");
+
+            migrationBuilder.DropTable(
+                name: "Restauration");
+
+            migrationBuilder.DropTable(
+                name: "Sculpture");
+
+            migrationBuilder.DropTable(
+                name: "Museum");
+
+            migrationBuilder.DropTable(
+                name: "Artwork");
+        }
+    }
+}
