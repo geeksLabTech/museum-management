@@ -1,0 +1,61 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using museum_management.Data;
+using System.Text.Encodings.Web;
+using museum_management.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace museum_management.Controllers{
+    public class CatalogController : Controller {
+        private readonly MuseumManagementContext _context;
+
+        public CatalogController(MuseumManagementContext context) {
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index() {
+            var artworks = await _context.Artworks.ToListAsync();
+            var restaurations = await _context.Restaurations.ToListAsync();
+            var lendingToMuseums = await _context.LendingToMuseums.ToListAsync();
+
+            var artworkViewModelList = new List<ArtworkViewModel>();
+
+            foreach (var artwork in artworks) {
+                var artworkViewModel = new ArtworkViewModel();
+                artworkViewModel.Artwork = artwork;
+                artworkViewModel.Restaurations = new List<Restauration>();
+                artworkViewModel.ActualMuseum = "My Museum";
+                foreach (var restauration in restaurations) {
+                    if (restauration.ArtworkId == artwork.Id) {
+                        artworkViewModel.Restaurations.Add(restauration);
+                    }
+                }
+                /*
+                foreach (var lendingToMuseum in lendingToMuseums) {
+                    if (lendingToMuseum.ArtworkId == artwork.Id && !lendingToMuseum.IsFinished) {
+                        artworkViewModel.ActualMuseum = lendingToMuseum.Museum.Name;
+                    }
+                }
+                */
+                artworkViewModelList.Add(artworkViewModel);
+            } 
+
+            return View(artworkViewModelList);
+        }
+
+        public async Task<IActionResult> Restaurations(int? id) {
+            if (id == null) {
+                return NotFound();
+            }
+
+            var restaurations = await _context.Restaurations.Where(r => r.ArtworkId == id).ToListAsync();
+
+            if (restaurations == null) {
+                return NotFound();
+            }
+
+            return View(restaurations);
+
+        }
+    }
+}
