@@ -19,8 +19,16 @@ namespace museum_management.Models{
         public DateTime StartDate {get; set;}
         */
 
-        public bool IsFinished {get; set;}
+        public LendingState LendingState {get; set;}
 
         public int PeriodInDays {get; set;}
     }
+}
+
+public enum LendingState {
+    Requested,
+    Lended,
+    Denied,
+    Returned,
+    
 }

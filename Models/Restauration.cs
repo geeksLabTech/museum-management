@@ -15,5 +15,15 @@ namespace museum_management.Models{
         public int ArtworkId {get; set;}
 
         public Artwork Artwork{get; set;}
+
+        public RestaurationType RestaurationType {get; set;}
+
+    }
+
+    public enum RestaurationType {
+        Complete,
+        Partial,
+        Minimal
     }
 }
+

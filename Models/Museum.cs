@@ -7,5 +7,6 @@ namespace museum_management.Models{
         public int Id {get; set;}
 
         public string Name {get; set;}
+
     }
 }

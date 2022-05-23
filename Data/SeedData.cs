@@ -95,7 +95,7 @@ namespace museum_management.Models{
                     {
                         ArtworkId = 1,
                         PeriodInDays = 40,
-                        IsFinished = false,
+                        LendingState = LendingState.Lended,
                         Artwork = artworks[0],
                         Museum = museums[0],
                         MuseumId = 1
@@ -104,7 +104,7 @@ namespace museum_management.Models{
                     {
                         ArtworkId = 2,
                         PeriodInDays = 30,
-                        IsFinished = true,
+                        LendingState = LendingState.Returned,
                         Artwork = artworks[1],
                         Museum = museums[1],
                         MuseumId = 2
@@ -113,7 +113,7 @@ namespace museum_management.Models{
                     {
                         ArtworkId = 3,
                         PeriodInDays = 20,
-                        IsFinished = false,
+                        LendingState = LendingState.Denied,
                         Artwork = artworks[2],
                         Museum = museums[1],
                         MuseumId = 3

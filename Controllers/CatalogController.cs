@@ -12,7 +12,7 @@ namespace museum_management.Controllers{
         public CatalogController(MuseumManagementContext context) {
             _context = context;
         }
-
+        
         public async Task<IActionResult> Index() {
             var artworks = await _context.Artworks.ToListAsync();
             var restaurations = await _context.Restaurations.ToListAsync();
@@ -56,6 +56,47 @@ namespace museum_management.Controllers{
 
             return View(restaurations);
 
+        }
+
+        public IActionResult Create(){
+            
+        }
+
+        public async Task<IActionResult> Edit(int? id){
+            if (id == null) {
+                return NotFound();
+            }
+
+            var artwork = await _context.Artworks.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (artwork == null) {
+                return NotFound();
+            }
+
+            return View(artwork);
+        }
+
+        public async Task<IActionResult> Delete(int? id){
+            if (id == null) {
+                return NotFound();
+            }
+
+            var artwork = await _context.Artworks
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (artwork == null) {
+                return NotFound();
+            }
+
+            return View(artwork);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id){
+            var artwork = await _context.Artworks.FindAsync(id);
+            _context.Artworks.Remove(artwork);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

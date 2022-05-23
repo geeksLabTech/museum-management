@@ -14,6 +14,8 @@ namespace museum_management.Data
         public DbSet<Sculpture> Sculptures {get; set;}
         public DbSet<LendingToMuseum> LendingToMuseums {get; set;}
         public DbSet<Restauration> Restaurations {get; set;}
+        public DbSet<User> Users {get; set;}
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             modelBuilder.Entity<Artwork>().ToTable("Artwork");
@@ -22,6 +24,7 @@ namespace museum_management.Data
             modelBuilder.Entity<Sculpture>().ToTable("Sculpture");
             modelBuilder.Entity<LendingToMuseum>().ToTable("LendingToMuseum");
             modelBuilder.Entity<Restauration>().ToTable("Restauration");
+            modelBuilder.Entity<User>().ToTable("User");
 
             modelBuilder.Entity<Restauration>()
                 .HasKey(r => new {r.Id, r.ArtworkId});
