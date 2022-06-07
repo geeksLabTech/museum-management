@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace museum_management.Models{
 
     public class User {
+        public int Id {get; set;}
         public string Name {get; set;}
 
         [DataType(DataType.EmailAddress)]

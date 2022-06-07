@@ -58,9 +58,9 @@ namespace museum_management.Controllers{
 
         }
 
-        public IActionResult Create(){
+        //public IActionResult Create(){
             
-        }
+        //}
 
         public async Task<IActionResult> Edit(int? id){
             if (id == null) {
