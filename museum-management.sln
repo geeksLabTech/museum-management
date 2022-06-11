@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "data-layer", "data-layer\data-layer.csproj", "{7313DED7-0330-48F2-94FB-A2B9154A5E12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "museum-management", "museum-management.csproj", "{23908C01-074C-4C27-9166-6709B665E61C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7313DED7-0330-48F2-94FB-A2B9154A5E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7313DED7-0330-48F2-94FB-A2B9154A5E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7313DED7-0330-48F2-94FB-A2B9154A5E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7313DED7-0330-48F2-94FB-A2B9154A5E12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23908C01-074C-4C27-9166-6709B665E61C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23908C01-074C-4C27-9166-6709B665E61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23908C01-074C-4C27-9166-6709B665E61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23908C01-074C-4C27-9166-6709B665E61C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
