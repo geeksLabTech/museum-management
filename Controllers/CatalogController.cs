@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using museum_management.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
+
 namespace museum_management.Controllers{
     public class CatalogController : Controller {
         private readonly MuseumManagementContext _context;
@@ -98,5 +99,30 @@ namespace museum_management.Controllers{
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        
+        
+        public async Task<IActionResult> Index(string artworkroom)  
+        {
+  
+            IQueryable<string> genreQuery = from m in _context.Artworks
+                                            orderby m.MuseumRoom
+                                            select m.MuseumRoom;
+            var artwork = from m in _context.Artworks
+                         select m;
+
+
+            if (!string.IsNullOrEmpty(artworkroom))
+            {
+                artwork = artwork.Where(x => x.MuseumRoom == artworkroom);
+            }
+
+            var artworkRoomVM = new ArtworkRoomViewModel
+            {
+                MuseumRoom = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Artworks = await artwork.ToListAsync()
+            };
+
+            return View(artworkRoomVM);
+}
     }
 }

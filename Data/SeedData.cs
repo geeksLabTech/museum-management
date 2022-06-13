@@ -22,6 +22,7 @@ namespace museum_management.Models{
                         Author = "Leonardo da Vinci",
                         EntryDate= DateTime.Parse("2019-1-11"),
                         EconomicValue = 100,
+                        MuseumRoom = "West",
                         Id = 1
                     },
                     new Artwork
@@ -31,6 +32,7 @@ namespace museum_management.Models{
                         Author = "Leonardo da Vinci",
                         EntryDate= DateTime.Parse("2019-2-11"),
                         EconomicValue = 120,
+                        MuseumRoom = "South",
                         Id = 2
                     },
                     new Artwork
@@ -40,6 +42,7 @@ namespace museum_management.Models{
                         Author = "Leonardo da Vinci",
                         EntryDate= DateTime.Parse("2019-3-11"),
                         EconomicValue = 130,
+                        MuseumRoom = "East",
                         Id = 3
                     }
                 };

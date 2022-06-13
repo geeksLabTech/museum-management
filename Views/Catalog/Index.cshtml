@@ -30,6 +30,9 @@
             <th>
                 @Html.DisplayNameFor(model => model[0].ActualMuseum)
             </th>
+            <th> 
+                @Html.DisplayNameFor(model => model[0].Artwork.MuseumRoom)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -59,7 +62,10 @@
                     @Html.DisplayFor(modelItem => item.ActualMuseum)
                 </td>
                 <td>
-                    <a asp-action="Restaurations" asp-route-id="@item.Artwork.Id">Restauraciones</a>
+                    @Html.DisplayFor(modelItem => item.Artwork.MuseumRoom)
+                </td>
+                <td>
+                    @* <a asp-action="Restaurations" asp-route-id="@item.Artwork.Id">Restauraciones</a> *@
                 </td>
             </tr>
         }
