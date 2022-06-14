@@ -23,5 +23,11 @@ namespace museum_management.Models{
         [Display(Name = "Entry Date")]
         [DataType(DataType.Date)]
         public DateTime EntryDate {get; set;}
+
+        [Display(Name = "Museum room")]
+        public string? MuseumRoom {get;set;}
+
+        // [Display(nameof = "Actual Museum")]
+        // public string? ActualMuseum {get; set;}
     }
 }

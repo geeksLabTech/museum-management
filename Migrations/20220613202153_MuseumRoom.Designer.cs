@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using museum_management.Data;
 
@@ -10,9 +11,10 @@ using museum_management.Data;
 namespace museum_management.Migrations
 {
     [DbContext(typeof(MuseumManagementContext))]
-    partial class MuseumManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20220613202153_MuseumRoom")]
+    partial class MuseumRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");

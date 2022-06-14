@@ -1,65 +1,82 @@
-@model List<ArtworkViewModel>
+@model museum_management.Models.ArtworkRoomViewModel
 
 @{
-    ViewData["Artwork Catalog"] = "Index";
+    ViewData["Title"] = "Artworks List";
 }
 
-<h1>Artwork Catalog</h1>
+<h2>Artwork Catalog</h2>
+
+<form asp-controller= "Catalog" asp-action="Index" method="get">
+    <p>
+        <select asp-for="Artworkroom" asp-items="Model.MuseumRoom">
+            <option value="">All</option>
+        </select>
+        @* <input type="submit" value="Filter"/> *@
+        @* Title: <input type="text" name="Artworkroom " /> *@
+        <input type="submit" value="Filter" /> 
+    </p>
+</form>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model[0].Artwork.Title)
+                @Html.DisplayNameFor(model => model.Artworks[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Artwork.Author)
+                @Html.DisplayNameFor(model => model.Artworks[0].Author)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Artwork.CreationDate)
+                @Html.DisplayNameFor(model => model.Artworks[0].CreationDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Artwork.EconomicValue)
+                @Html.DisplayNameFor(model => model.Artworks[0].EconomicValue)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Artwork.EntryDate)
+                @Html.DisplayNameFor(model => model.Artworks[0].EntryDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Artwork.Period)
+                @Html.DisplayNameFor(model => model.Artworks[0].Period)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].ActualMuseum)
+                @* @Html.DisplayNameFor(model => model.Artwork[0].ActualMuseum) *@
+            </th>
+            <th> 
+                @Html.DisplayNameFor(model => model.Artworks[0].MuseumRoom)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Artworks)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Artwork.Title)
+                    @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Artwork.Author)
+                    @Html.DisplayFor(modelItem => item.Author)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Artwork.CreationDate)
+                    @Html.DisplayFor(modelItem => item.CreationDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Artwork.EconomicValue)
+                    @Html.DisplayFor(modelItem => item.EconomicValue)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Artwork.EntryDate)
+                    @Html.DisplayFor(modelItem => item.EntryDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Artwork.Period)
+                    @Html.DisplayFor(modelItem => item.Period)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ActualMuseum)
+                    @* @Html.DisplayFor(modelItem => item.ActualMuseum) *@
                 </td>
                 <td>
-                    <a asp-action="Restaurations" asp-route-id="@item.Artwork.Id">Restauraciones</a>
+                    @Html.DisplayFor(modelItem => item.MuseumRoom)
+                </td>
+                <td>
+                    @* <a asp-action="Restaurations" asp-route-id="@item.Artwork.Id">Restauraciones</a> *@
                 </td>
             </tr>
         }
