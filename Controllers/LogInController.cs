@@ -14,6 +14,6 @@ namespace museum_management.Controllers
         {
             return View();
         }
-        
+
     }
 }
