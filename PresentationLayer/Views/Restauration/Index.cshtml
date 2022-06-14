@@ -1,0 +1,41 @@
+@model List<DataLayer.Models.Restauration>
+
+@{
+    ViewData["Title"] = "Restaurations";
+}
+
+<h1>Restaurations</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].RestaurationType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].EndDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody> 
+        @foreach (var restauration in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => restauration.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => restauration.EndDate)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index">Back to Catalog</a>
+</div>
