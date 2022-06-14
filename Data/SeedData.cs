@@ -12,7 +12,9 @@ namespace museum_management.Models{
                     DbContextOptions<MuseumManagementContext>>())) {
                 // Look for any artworks.
                 if (context.Artworks.Any()) {
-                    return;   // DB has been seeded
+                    context.RemoveRange(context.Artworks);
+                    context.SaveChanges();
+                       // DB has been seeded
                 }
                 var artworks = new Artwork[] {
                     new Artwork

@@ -26,5 +26,8 @@ namespace museum_management.Models{
 
         [Display(Name = "Museum room")]
         public string? MuseumRoom {get;set;}
+
+        // [Display(nameof = "Actual Museum")]
+        // public string? ActualMuseum {get; set;}
     }
 }
