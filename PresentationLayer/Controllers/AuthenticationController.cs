@@ -61,6 +61,10 @@ namespace museum_management.Controllers
             return Unauthorized();
         }
 
+        public async Task<IActionResult> Register(){
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {

@@ -4,7 +4,7 @@ using DataLayer.Data;
 
 namespace museum_management.Controllers{
 
-    class RolesController : Controller {
+    public class RolesController : Controller {
 
         private readonly MuseumManagementContext _context;
 
