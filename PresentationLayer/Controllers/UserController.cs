@@ -27,7 +27,13 @@ namespace museum_management.Controllers
             foreach (var user in _userManager.Users)
             {   
                 var rolList = await _userManager.GetRolesAsync(user);
-                User actualUser = new User(int.Parse(user.Id),user.UserName,user.Email,user.PasswordHash,rolList.ToList());
+                var actualUser = new User();
+                actualUser.Name = user.UserName;
+                
+                actualUser.Email = user.Email;
+                actualUser.Role = rolList.ToList();
+
+                //User actualUser = new User(int.Parse(user.Id),user.UserName,user.Email,user.PasswordHash,rolList.ToList());
                 users.Add(actualUser);
             }
             return View(users);

@@ -29,7 +29,7 @@ namespace DataLayer.Data
             modelBuilder.Entity<Sculpture>().ToTable("Sculpture");
             modelBuilder.Entity<LendingToMuseum>().ToTable("LendingToMuseum");
             modelBuilder.Entity<Restauration>().ToTable("Restauration");
-            modelBuilder.Entity<User>().ToTable("User");
+            //modelBuilder.Entity<User>().ToTable("User");
 
             modelBuilder.Entity<Restauration>()
                 .HasKey(r => new {r.Id, r.ArtworkId});
