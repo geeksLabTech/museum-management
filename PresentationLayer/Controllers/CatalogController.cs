@@ -55,8 +55,9 @@ namespace museum_management.Controllers{
             if (restaurations == null) {
                 return NotFound();
             }
-
+            
             return View(restaurations);
+            
 
         }
 

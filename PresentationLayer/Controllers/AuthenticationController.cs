@@ -3,19 +3,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using PresentationLayer.ViewModels;
 //using Microsoft.AspNetCore.Identity.IdentityModel;
 using System.Security.Claims;
 using System.Text;
 
 namespace museum_management.Controllers
 {
-    public class AuthenticateController : Controller
+    public class AuthenticationController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
-        public AuthenticateController(
+        public AuthenticationController(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IConfiguration configuration)
@@ -25,10 +26,15 @@ namespace museum_management.Controllers
             _configuration = configuration;
         }
 
+        public async Task<IActionResult> Index (){
+            return View();
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
+            
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
@@ -45,7 +51,7 @@ namespace museum_management.Controllers
                 }
 
                var token = GetToken(authClaims);
-
+                
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
@@ -56,7 +62,7 @@ namespace museum_management.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
@@ -76,7 +82,7 @@ namespace museum_management.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
+        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterViewModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)

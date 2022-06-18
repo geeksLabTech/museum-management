@@ -9,7 +9,6 @@ namespace PresentationLayer.ViewModels{
         public List<Restauration> Restaurations {get; set;}
         public SelectList? MuseumRoom { get; set;}
 
-
         public string ActualMuseum {get; set;}
         public string? ArtworkRoom { get; set; }
     }
