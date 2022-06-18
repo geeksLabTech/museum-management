@@ -1,8 +1,13 @@
 @model PresentationLayer.ViewModels.RegisterViewModel
 
-<form asp-controller="Demo" asp-action="RegisterInput" method="post">
-    Email:  <input asp-for="Email" /> <br />
-    Password: <input asp-for="Password" /><br />
-    Username: <input asp-for="Username"/><br/>
-    <button type="submit">Register</button>
-</form>
+<div class="container center" style="max-width:40%">
+    <form asp-controller="Demo" asp-action="RegisterInput" method="post">
+        <label for="email">Email</label>
+        <input class='form-control' id='email' name="email"  asp-for="Email" /> <br />
+        <label for="password">Password</label>
+        <input  class='form-control' id="password" name='password' asp-for="Password" /><br />
+        <label for="username">Username</label>
+        <input  class='form-control' id="username" name='username' asp-for="Username" /><br />
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+</div>
