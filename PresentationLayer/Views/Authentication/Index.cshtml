@@ -1,7 +1,7 @@
-@model PresentationLayer.ViewModels.RegisterViewModel
+@model PresentationLayer.ViewModels.LoginViewModel
 
 <div class="container center" style="max-width:40%">
-    <form asp-controller="Demo" asp-action="RegisterInput" method="post">
+    <form asp-controller="Authentication" asp-action="Login" method="post">
         <label for="email">Email</label>
         <input class='form-control' id='email' name="email"  asp-for="Email" /> <br />
         <label for="password">Password</label>

@@ -7,6 +7,7 @@ using PresentationLayer.ViewModels;
 //using Microsoft.AspNetCore.Identity.IdentityModel;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace museum_management.Controllers
 {
@@ -31,12 +32,14 @@ namespace museum_management.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+        public async Task<IActionResult> Login([FromForm] LoginViewModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.Username);
-            
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            System.Console.WriteLine("usuario::u ");
+            System.Console.WriteLine(user==null);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
+                System.Console.WriteLine("entreeee");
                 var userRoles = await _userManager.GetRolesAsync(user);
 
                 var authClaims = new List<Claim>
@@ -66,7 +69,7 @@ namespace museum_management.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
+        public async Task<IActionResult> RegisterInput([FromForm] RegisterViewModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
@@ -86,7 +89,7 @@ namespace museum_management.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterViewModel model)
+        public async Task<IActionResult> RegisterAdmin([FromForm] RegisterViewModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)

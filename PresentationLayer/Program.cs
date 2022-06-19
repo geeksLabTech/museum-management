@@ -38,6 +38,14 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = configuration["JWT:ValidIssuer"],
         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
     };
+    options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    context.Token = context.Request.Cookies["jwt"];
+                    return Task.CompletedTask;
+                }
+            };
 });
 
 
@@ -65,14 +73,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Authentication & Authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-// Authentication & Authorization
-app.UseAuthentication();
-app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
