@@ -11,7 +11,7 @@ using DataLayer.Models;
 
 namespace museum_management.Controllers
 {
-    [Authorize (Roles = UserRoles.Admin)]
+    //[Authorize (Roles = UserRoles.Admin)]
     public class UserController : Controller 
     {
 
@@ -40,6 +40,72 @@ namespace museum_management.Controllers
                 users.Add(actualUser);
             }
             return View(users);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            foreach (var user in _userManager.Users)
+            {
+                var userid = user.Id;
+                if (userid == null)
+                {
+                    return NotFound();
+
+                }
+                else if(int.Parse(userid) == id)
+                    return View(userid);
+
+            }
+           
+        }
+        public async Task<IActionResult> Detail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            foreach(var user in _userManager.Users)
+            {
+                var userid = user.Id;
+                if (userid == null)
+                {
+                    return NotFound();
+                }
+                else if(int.Parse(userid)==id)
+                {
+                    var rolList = await _userManager.GetRolesAsync(user);
+                    var actualUser = new User();
+                    actualUser.Name = user.UserName;
+                
+                    actualUser.Email = user.Email;
+                    actualUser.Role = rolList.ToList(); 
+                    return View(actualUser);
+                }
+            }
+        }
+        public async Task<IActionResult> Delete(int ? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            foreach(var user in _userManager.Users)
+            {
+                var userid = user.Id;
+                if(userid == null)
+                {
+                    return NotFound();
+                }
+                else if(int.Parse(userid)== id)
+                {
+                    await _userManager.DeleteAsync(user);
+                }
+            }
         }
     }
 }
