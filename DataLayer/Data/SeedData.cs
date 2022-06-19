@@ -13,6 +13,9 @@ namespace DataLayer.Models{
                 // Look for any artworks.
                 if (context.Artworks.Any()) {
                     context.RemoveRange(context.Artworks);
+                    context.RemoveRange(context.Museums);
+                    context.RemoveRange(context.LendingToMuseums);
+                    context.RemoveRange(context.Restaurations);
                     context.SaveChanges();
                        // DB has been seeded
                 }
@@ -25,7 +28,8 @@ namespace DataLayer.Models{
                         EntryDate= DateTime.Parse("2019-1-11"),
                         EconomicValue = 100,
                         MuseumRoom = "West",
-                        Id = 1
+                        Id = 1,
+                        LendingToMuseums = new List<LendingToMuseum>()
                     },
                     new Artwork
                     {
@@ -35,7 +39,8 @@ namespace DataLayer.Models{
                         EntryDate= DateTime.Parse("2019-2-11"),
                         EconomicValue = 120,
                         MuseumRoom = "South",
-                        Id = 2
+                        Id = 2,
+                        LendingToMuseums = new List<LendingToMuseum>()
                     },
                     new Artwork
                     {
@@ -45,7 +50,8 @@ namespace DataLayer.Models{
                         EntryDate= DateTime.Parse("2019-3-11"),
                         EconomicValue = 130,
                         MuseumRoom = "East",
-                        Id = 3
+                        Id = 3,
+                        LendingToMuseums = new List<LendingToMuseum>()
                     }
                 };
                 context.Artworks.AddRange(
@@ -95,7 +101,7 @@ namespace DataLayer.Models{
                     museums[2]
                 );
                 context.SaveChanges();
-                context.LendingToMuseums.AddRange(
+                var lendingToMuseums = new LendingToMuseum[] {
                     new LendingToMuseum
                     {
                         ArtworkId = 1,
@@ -123,8 +129,21 @@ namespace DataLayer.Models{
                         Museum = museums[1],
                         MuseumId = 3
                     }
+                };
+                context.LendingToMuseums.AddRange(
+                    lendingToMuseums[0],
+                    lendingToMuseums[1],
+                    lendingToMuseums[2]
                 );
+                var count = 0;
+                foreach (var art in context.Artworks){
+                    art.LendingToMuseums.Add(lendingToMuseums[count]);
+                    count++;
+                }
+                
                 context.SaveChanges();
+                var x = context.LendingToMuseums.ToList();
+                System.Console.WriteLine( x[0].Artwork.Title);
             }
         }
     }

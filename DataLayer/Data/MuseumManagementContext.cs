@@ -9,7 +9,7 @@ namespace DataLayer.Data
 
         public MuseumManagementContext(DbContextOptions<MuseumManagementContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
         
         public DbSet<Artwork> Artworks {get; set;}

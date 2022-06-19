@@ -14,8 +14,9 @@ namespace museum_management.Controllers{
             }
     
             public async Task<IActionResult> Index() {
-                var lendingToMuseums = _context.LendingToMuseums.ToList();
-    
+                var lendingToMuseums = await _context.LendingToMuseums.ToListAsync();
+                System.Console.WriteLine(  "mmmm");
+                System.Console.WriteLine("LendingToMuseums: " + lendingToMuseums[0].Artwork.Title);
                 return View(lendingToMuseums);
             }
     
