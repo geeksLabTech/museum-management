@@ -2,13 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataLayer.Data;
 using System.Text.Encodings.Web;
-using DataLayer.Models;
+using DataLayer.Models.Auth;
 using PresentationLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace museum_management.Controllers
 {
+    [Authorize (Roles = UserRoles.Admin)]
     public class UserController : Controller 
     {
 

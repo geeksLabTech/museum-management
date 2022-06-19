@@ -5,6 +5,7 @@ using DataLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -45,7 +46,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+// builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
