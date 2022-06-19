@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataLayer.Data;
 using PresentationLayer.ViewModels;
-
+using DataLayer.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 namespace museum_management.Controllers{
-
+    [Authorize (Roles = UserRoles.Restaurator)]
     public class RestaurationController: Controller{
             
             private readonly MuseumManagementContext _context;

@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataLayer.Data;
 using PresentationLayer.ViewModels;
+using DataLayer.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 //using System.Text;
 
 namespace museum_management.Controllers{
-
+    [Authorize(Roles = UserRoles.Director)]
     public class LendingController: Controller{
             
             private readonly MuseumManagementContext _context;
