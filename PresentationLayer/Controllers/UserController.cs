@@ -7,6 +7,7 @@ using PresentationLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using DataLayer.Models;
 
 namespace museum_management.Controllers
 {
