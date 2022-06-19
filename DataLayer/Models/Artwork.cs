@@ -29,6 +29,8 @@ namespace DataLayer.Models{
 
         public List<LendingToMuseum> LendingToMuseums {get; set;}
 
+        public List<Restauration> Restaurations {get; set;}
+
         // [Display(nameof = "Actual Museum")]
         // public string? ActualMuseum {get; set;}
     }

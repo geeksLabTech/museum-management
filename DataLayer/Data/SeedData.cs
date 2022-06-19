@@ -65,6 +65,8 @@ namespace DataLayer.Models{
                     {
                         Id = 1,
                         ArtworkId = 1,
+                        Artwork = artworks[0],
+                        RestaurationType = RestaurationType.Complete,
                         StartDate = DateTime.Parse("2019-1-11"),
                         EndDate = DateTime.Parse("2019-2-11")
 
@@ -73,6 +75,8 @@ namespace DataLayer.Models{
                     {
                         Id = 2,
                         ArtworkId = 2,
+                        Artwork = artworks[1],
+                        RestaurationType = RestaurationType.Partial,
                         StartDate = DateTime.Parse("2019-2-11"),
                         EndDate = DateTime.Parse("2019-3-11")
                     },
@@ -80,6 +84,8 @@ namespace DataLayer.Models{
                     {
                         Id = 3,
                         ArtworkId = 3,
+                        Artwork = artworks[2],
+                        RestaurationType = RestaurationType.Minimal,
                         StartDate = DateTime.Parse("2019-3-11"),
                         EndDate = DateTime.Parse("2019-4-11")
                     }
