@@ -11,7 +11,7 @@ using DataLayer.Models;
 
 namespace museum_management.Controllers
 {
-    //[Authorize (Roles = UserRoles.Admin)]
+    [Authorize (Roles = "Admin")]
     public class UserController : Controller 
     {
 
@@ -24,7 +24,6 @@ namespace museum_management.Controllers
            _roleManager = roleManager;   
         }
         public async Task<IActionResult> Index()
-
         {
             List<User> users = new List<User>();
             foreach (var user in _userManager.Users)
@@ -41,71 +40,80 @@ namespace museum_management.Controllers
             }
             return View(users);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            foreach (var user in _userManager.Users)
-            {
-                var userid = user.Id;
-                if (userid == null)
-                {
-                    return NotFound();
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> Edit(int? id)
+        // {
+        //     if (id == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     var user = await _userManager.FindByIdAsync(id.ToString());
+        //     if (user == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-                }
-                else if(int.Parse(userid) == id)
-                    return View(userid);
+        //     foreach (var user in _userManager.Users)
+        //     {
+        //         var userid = user.Id;
+        //         if (userid == null)
+        //         {
+        //             return NotFound();
 
-            }
+        //         }
+        //         else if(int.Parse(userid) == id)
+        //             return View(userid);
+
+        //     }
            
-        }
-        public async Task<IActionResult> Detail(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            foreach(var user in _userManager.Users)
-            {
-                var userid = user.Id;
-                if (userid == null)
-                {
-                    return NotFound();
-                }
-                else if(int.Parse(userid)==id)
-                {
-                    var rolList = await _userManager.GetRolesAsync(user);
-                    var actualUser = new User();
-                    actualUser.Name = user.UserName;
+        // }
+        // public async Task<IActionResult> Detail(int? id)
+        // {
+        //     if (id == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     var user = await _userManager.FindByIdAsync(id.ToString());
+        //     if (user == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     foreach(var user in _userManager.Users)
+        //     {
+        //         var userid = user.Id;
+        //         if (userid == null)
+        //         {
+        //             return NotFound();
+        //         }
+        //         else if(int.Parse(userid)==id)
+        //         {
+        //             var rolList = await _userManager.GetRolesAsync(user);
+        //             var actualUser = new User();
+        //             actualUser.Name = user.UserName;
                 
-                    actualUser.Email = user.Email;
-                    actualUser.Role = rolList.ToList(); 
-                    return View(actualUser);
-                }
-            }
-        }
+        //             actualUser.Email = user.Email;
+        //             actualUser.Role = rolList.ToList(); 
+        //             return View(actualUser);
+        //         }
+        //     }
+        // }
+        [HttpPost]
         public async Task<IActionResult> Delete(int ? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            foreach(var user in _userManager.Users)
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
             {
-                var userid = user.Id;
-                if(userid == null)
-                {
-                    return NotFound();
-                }
-                else if(int.Parse(userid)== id)
-                {
-                    await _userManager.DeleteAsync(user);
-                }
+                return NotFound();
             }
+            await _userManager.DeleteAsync(user);
+            
+            return RedirectToAction("Index");
         }
     }
 }
