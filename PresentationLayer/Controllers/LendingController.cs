@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataLayer.Data;
+using PresentationLayer.ViewModels;
+using DataLayer.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
+//using System.Text;
 
 namespace museum_management.Controllers{
-
-    class LendingController: Controller{
+    [Authorize(Roles = UserRoles.Director)]
+    public class LendingController: Controller{
             
             private readonly MuseumManagementContext _context;
     
@@ -12,10 +16,25 @@ namespace museum_management.Controllers{
                 _context = context;
             }
     
-            public IActionResult Index() {
-                var lendingToMuseums = _context.LendingToMuseums.ToList();
-    
-                return View(lendingToMuseums);
+            public async Task<IActionResult> Index() {
+                
+                var lendingToMuseums = await _context.LendingToMuseums.ToListAsync();
+                List<LendingViewModel> lendingViewModels = new List<LendingViewModel>();
+
+                foreach (var lending in lendingToMuseums) {
+                    var artwork = await _context.Artworks.FindAsync(lending.ArtworkId);
+                    var museum = await _context.Museums.FindAsync(lending.MuseumId);
+                    lendingViewModels.Add(new LendingViewModel {
+                        LendingToMuseum = lending,
+                        ArtworkTitle = artwork.Title,
+                        MuseumName = museum.Name,
+                        
+                    });
+                
+                }
+                System.Console.WriteLine(  "mmmm");
+                System.Console.WriteLine("LendingToMuseums: " + lendingToMuseums[0].ArtworkId);
+                return View(lendingViewModels);
             }
     
     }

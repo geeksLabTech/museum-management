@@ -1,4 +1,4 @@
-@model List<DataLayer.Models.Restauration>
+@model List<PresentationLayer.ViewModels.RestaurationViewModel>
 
 @{
     ViewData["Title"] = "Restaurations";
@@ -10,13 +10,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model[0].RestaurationType)
+                @Html.DisplayNameFor(model => model[0].ArtworkTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].StartDate)
+                @Html.DisplayNameFor(model => model[0].Restauration.RestaurationType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].EndDate)
+                @Html.DisplayNameFor(model => model[0].Restauration.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Restauration.EndDate)
             </th>
             <th></th>
         </tr>
@@ -26,10 +29,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => restauration.StartDate)
+                    @Html.DisplayFor(modelItem => restauration.ArtworkTitle)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => restauration.EndDate)
+                    @Html.DisplayFor(modelItem => restauration.Restauration.RestaurationType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => restauration.Restauration.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => restauration.Restauration.EndDate)
                 </td>
             </tr>
         }

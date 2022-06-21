@@ -5,9 +5,12 @@ using System.Text.Encodings.Web;
 using DataLayer.Models;
 using PresentationLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Microsoft.AspNetCore.Authorization;
+using DataLayer.Models.Auth;
+using PresentationLayer.Globals;
 
 namespace museum_management.Controllers{
+    [AllowAnonymous]
     public class CatalogController : Controller {
         private readonly MuseumManagementContext _context;
 
@@ -55,8 +58,9 @@ namespace museum_management.Controllers{
             if (restaurations == null) {
                 return NotFound();
             }
-
+            
             return View(restaurations);
+            
 
         }
 
@@ -104,6 +108,8 @@ namespace museum_management.Controllers{
         
         public async Task<IActionResult> Index(string artworkroom)  
         {
+            System.Console.WriteLine("********** prueba *********");
+            System.Console.WriteLine(SavedJwt.IsAuthenticated);
   
             IQueryable<string> genreQuery = from m in _context.Artworks
                                             orderby m.MuseumRoom

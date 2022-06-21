@@ -6,7 +6,7 @@ namespace PresentationLayer.ViewModels
 {
     public class ArtworkRoomViewModel
     {
-        public List<Artwork> Artworks {get; set;}
+        public List<Artwork>? Artworks {get; set;}
         public SelectList? MuseumRoom { get; set; }
         public string? Artworkroom { get; set; }
     }

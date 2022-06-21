@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataLayer.Data;
-
+using PresentationLayer.ViewModels;
+using DataLayer.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 namespace museum_management.Controllers{
-
-    class RestaurationController: Controller{
+    [Authorize (Roles = UserRoles.Restaurator)]
+    public class RestaurationController: Controller{
             
             private readonly MuseumManagementContext _context;
     
@@ -12,13 +14,19 @@ namespace museum_management.Controllers{
                 _context = context;
             }
     
-            public IActionResult Index() {
+            public async Task<IActionResult> Index() {
                 
-                var restaurations = _context.Restaurations.ToList();
-                
-                return View(restaurations);
-               
-                    
+                var restaurations = await _context.Restaurations.ToListAsync();
+                List<RestaurationViewModel> restaurationViewModels = new List<RestaurationViewModel>();
+                foreach(var restauration in restaurations){
+                    var artwork = await _context.Artworks.FindAsync(restauration.ArtworkId);
+                    restaurationViewModels.Add(new RestaurationViewModel{
+                        ArtworkTitle = restauration.Artwork.Title,
+                        Restauration = restauration
+                    });
+                }
+
+                return View(restaurationViewModels);
             }
             /*
             public async Task<IActionResult> Restaurations(int? id) {

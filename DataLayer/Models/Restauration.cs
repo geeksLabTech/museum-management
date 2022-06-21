@@ -11,9 +11,7 @@ namespace DataLayer.Models{
 
         [DataType(DataType.Date)]
         public DateTime EndDate {get; set;}
-
         public int ArtworkId {get; set;}
-
         public Artwork Artwork{get; set;}
 
         public RestaurationType RestaurationType {get; set;}

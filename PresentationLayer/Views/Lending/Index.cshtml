@@ -1,4 +1,4 @@
-@model List<DataLayer.Models.LendingToMuseum>
+@model List<PresentationLayer.ViewModels.LendingViewModel>
 
 @{
     ViewData["Title"] = "Lendings";
@@ -10,19 +10,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model[0].Artwork.Title)
+                @Html.DisplayNameFor(model => model[0].ArtworkTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Museum.Name)
+                @Html.DisplayNameFor(model => model[0].MuseumName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Amount)
+                @Html.DisplayNameFor(model => model[0].LendingToMuseum.Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].PeriodInDays)
+                @Html.DisplayNameFor(model => model[0].LendingToMuseum.PeriodInDays)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].LendingState)
+                @Html.DisplayNameFor(model => model[0].LendingToMuseum.LendingState)
             </th>
     </thead>
     <tbody>
@@ -30,19 +30,19 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Artwork.Title)
+                    @Html.DisplayFor(modelItem => item.ArtworkTitle)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Museum.Name)
+                    @Html.DisplayFor(modelItem => item.MuseumName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
+                    @Html.DisplayFor(modelItem => item.LendingToMuseum.Amount)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PeriodInDays)
+                    @Html.DisplayFor(modelItem => item.LendingToMuseum.PeriodInDays)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LendingState)
+                    @Html.DisplayFor(modelItem => item.LendingToMuseum.LendingState)
                 </td>
             </tr>
             

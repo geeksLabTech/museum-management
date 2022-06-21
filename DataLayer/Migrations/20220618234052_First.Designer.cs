@@ -3,6 +3,7 @@ using System;
 using DataLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(MuseumManagementContext))]
-    partial class MuseumManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20220618234052_First")]
+    partial class First
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.6");
@@ -337,7 +339,7 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("DataLayer.Models.LendingToMuseum", b =>
                 {
                     b.HasOne("DataLayer.Models.Artwork", "Artwork")
-                        .WithMany("LendingToMuseums")
+                        .WithMany()
                         .HasForeignKey("ArtworkId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -356,7 +358,7 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("DataLayer.Models.Restauration", b =>
                 {
                     b.HasOne("DataLayer.Models.Artwork", "Artwork")
-                        .WithMany("Restaurations")
+                        .WithMany()
                         .HasForeignKey("ArtworkId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -431,13 +433,6 @@ namespace DataLayer.Migrations
                         .HasForeignKey("DataLayer.Models.Sculpture", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DataLayer.Models.Artwork", b =>
-                {
-                    b.Navigation("LendingToMuseums");
-
-                    b.Navigation("Restaurations");
                 });
 #pragma warning restore 612, 618
         }
