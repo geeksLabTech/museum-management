@@ -1,4 +1,4 @@
-@model PresentationLayer.ViewModels.UserManagerViewModel
+@model List<DataLayer.Models.User>
 
 @{
     ViewData["Title"] = "Users";
@@ -9,19 +9,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Name)
+                @Html.DisplayNameFor(model => model[0].Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Email)
+                @Html.DisplayNameFor(model => model[0].Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Role)
+                @Html.DisplayNameFor(model => model[0].Role)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.User)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -34,7 +34,7 @@
                     @Html.DisplayFor(modelItem => item.Role)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Role">Edit</a>
+                    <a asp-action="Edit" asp-route-id="@item.Role" >Edit</a>
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     <a asp-action="Detail" asp-route-id="@item">Detail</a>
                 </td>

@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using PresentationLayer.Globals;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -140,7 +141,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+
 
 app.MapControllerRoute(
     name: "default",
@@ -148,5 +149,6 @@ app.MapControllerRoute(
     
     );
 
+app.MapRazorPages();
 
 app.Run();

@@ -100,12 +100,10 @@ namespace museum_management.Controllers
         //     }
         // }
         [HttpPost]
-        public async Task<IActionResult> Delete(int ? id)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
@@ -113,7 +111,7 @@ namespace museum_management.Controllers
             }
             await _userManager.DeleteAsync(user);
             
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

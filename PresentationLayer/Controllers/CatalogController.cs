@@ -10,7 +10,7 @@ using DataLayer.Models.Auth;
 using PresentationLayer.Globals;
 
 namespace museum_management.Controllers{
-    [Authorize (Roles = "Admin")]
+    [AllowAnonymous]
     public class CatalogController : Controller {
         private readonly MuseumManagementContext _context;
 
