@@ -7,7 +7,7 @@ using PresentationLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using DataLayer.Models.Auth;
-using PresentationLayer.Globals;
+
 
 namespace museum_management.Controllers{
     [AllowAnonymous]
@@ -108,10 +108,9 @@ namespace museum_management.Controllers{
         
         public async Task<IActionResult> Index(string artworkroom)  
         {
-            System.Console.WriteLine("********** prueba *********");
-            System.Console.WriteLine(SavedJwt.IsAuthenticated);
+            
   
-            IQueryable<string> genreQuery = from m in _context.Artworks
+            IQueryable<string> roomQuery = from m in _context.Artworks
                                             orderby m.MuseumRoom
                                             select m.MuseumRoom;
             var artwork = from m in _context.Artworks
@@ -125,7 +124,7 @@ namespace museum_management.Controllers{
 
             var artworkRoomVM = new ArtworkRoomViewModel
             {
-                MuseumRoom = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                MuseumRoom = new SelectList(await roomQuery.Distinct().ToListAsync()),
                 Artworks = await artwork.ToListAsync()
             };
 
