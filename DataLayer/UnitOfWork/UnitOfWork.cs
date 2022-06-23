@@ -6,10 +6,14 @@ using DataLayer.UnitOfWork;
 namespace Datalayer.UnitOfWork {
     public class UnitOfWork : IUnitOfWork {
         private readonly MuseumManagementContext _context;
-        private IArtworkRepository _artworks;
-        private IRestaurationRepository _restaurations;
-        private ILendingRepository _lendings;
-        private bool disposedValue;
+        
+        public UnitOfWork(MuseumManagementContext context) {
+            _context = context;
+            Artworks = new ArtworkRepository(_context);
+            Restaurations = new RestaurationRepository(_context);
+            Lendings = new LendingToMuseumRepository(_context);
+
+        }
 
         public IArtworkRepository Artworks {get; private set;}
 
