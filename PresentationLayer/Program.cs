@@ -3,12 +3,15 @@ using Microsoft.Extensions.DependencyInjection;
 using DataLayer.Data;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Identity;
+using DataLayer.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using PresentationLayer.Globals;
+
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Datalayer.UnitOfWork;
+using DataLayer.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -23,53 +26,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.Sign
     .AddDefaultTokenProviders();
     
 
-
-// Adding Authentication
-// builder.Services.AddAuthentication(options =>
-// {
-//     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-// })
-
-// // Adding Jwt Bearer
-// .AddJwtBearer(options =>
-// {
-    
-//     // options.Events = new JwtBearerEvents
-//     //         {
-//     //             OnMessageReceived = context =>
-//     //             {
-//     //                 context.Token = context.Response.Headers["Authorization"].ToString().Replace("Bearer ", "");
-//     //                 return Task.CompletedTask;
-//     //             }
-//     //         };
-//     options.SaveToken = true;
-    
-//     options.RequireHttpsMetadata = false;
-//     options.TokenValidationParameters = new TokenValidationParameters()
-//     {
-//         ValidateIssuer = true,
-//         ValidateAudience = true,
-//         ValidAudience = configuration["JWT:ValidAudience"],
-//         ValidIssuer = configuration["JWT:ValidIssuer"],
-//         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
-//     };
-    
-// });
-// builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-// {
-//     options.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme;
-//     options.LoginPath = new PathString("/Authentication");
-//     options.LogoutPath = new PathString("/Authentication/Logout");
-//     options.AccessDeniedPath = new PathString("/Authentication/AccessDenied");
-//     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-//     options.SlidingExpiration = true;
-//     options.Cookie.HttpOnly = true;
-//     options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-//     options.Cookie.SameSite = SameSiteMode.Strict;
-
-// });
+// Inject UnitOfWork in controllers
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
