@@ -8,14 +8,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using DataLayer.Models.Auth;
 using DataLayer;
+using DataLayer.UnitOfWork;
+
 
 namespace museum_management.Controllers{
     [AllowAnonymous]
     public class CatalogController : Controller {
         
-        private readonly DataLayer.UnitOfWork.IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CatalogController(Datalayer.UnitOfWork.UnitOfWork unitOfWork) {
+        public CatalogController(IUnitOfWork unitOfWork) {
             _unitOfWork = unitOfWork;
         }
         
