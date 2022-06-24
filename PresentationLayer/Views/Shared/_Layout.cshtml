@@ -17,12 +17,20 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Restaurador"))
+                {
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Restauration" asp-action = "Index">Restauration</a>
+                }
+               @if (User.Identity.IsAuthenticated && User.IsInRole("Director"))
+               { 
+                  <a class="nav-link text-dark" asp-area="" asp-controller="Lending" asp-action = "Index">Lending</a>
+               }
                     
-                <a class="nav-link text-dark" asp-area="" asp-controller="Restauration" asp-action = "Index">Restauration</a>
-                    
-                    
-                <a class="nav-link text-dark" asp-area="" asp-controller="Lending" asp-action = "Index">Lending</a>
-                <a class ="nav-link text-dark" asp-area="" asp-controller="User" asp-action = "Index">User Management</a>
+               @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+               { 
+                  
+                  <a class ="nav-link text-dark" asp-area="" asp-controller="User" asp-action = "Index">User Management</a>
+               }
                     
                 <div class="navbar-collapse d-flex flex-row-reverse">
                     <ul class="navbar-nav">

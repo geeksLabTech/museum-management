@@ -5,14 +5,14 @@ using PresentationLayer.ViewModels;
 using DataLayer.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using DataLayer;
-
+using DataLayer.UnitOfWork;
 namespace museum_management.Controllers{
     [Authorize(Roles = UserRoles.Director)]
     public class LendingController: Controller{
             
-            private readonly DataLayer.UnitOfWork.IUnitOfWork _unitOfWork;
+            private readonly IUnitOfWork _unitOfWork;
     
-            public LendingController(Datalayer.UnitOfWork.UnitOfWork unitOfWork) {
+            public LendingController( IUnitOfWork unitOfWork) {
                 _unitOfWork = unitOfWork;
             }
     

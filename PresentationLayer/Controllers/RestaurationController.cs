@@ -4,13 +4,14 @@ using DataLayer.Data;
 using PresentationLayer.ViewModels;
 using DataLayer.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
+using DataLayer.UnitOfWork;
 namespace museum_management.Controllers{
     [Authorize (Roles = UserRoles.Restaurator)]
     public class RestaurationController: Controller{
             
-            private readonly DataLayer.UnitOfWork.IUnitOfWork _unitOfWork;
+            private readonly IUnitOfWork _unitOfWork;
     
-            public RestaurationController(DataLayer.UnitOfWork.IUnitOfWork unitOfWork) {
+            public RestaurationController(IUnitOfWork unitOfWork) {
                 _unitOfWork = unitOfWork;
             }
     
