@@ -12,14 +12,16 @@ namespace Datalayer.UnitOfWork {
             Artworks = new ArtworkRepository(_context);
             Restaurations = new RestaurationRepository(_context);
             Lendings = new LendingToMuseumRepository(_context);
-
+            Museums = new MuseumsRepository(_context);
         }
-
+        
         public IArtworkRepository Artworks {get; private set;}
 
         public IRestaurationRepository Restaurations {get; private set;}
 
         public ILendingRepository Lendings {get; private set;}
+
+        public IMuseumRepository Museums {get; private set;}
 
         public int Complete()
         {

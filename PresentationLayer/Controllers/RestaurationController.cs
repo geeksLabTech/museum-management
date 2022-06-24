@@ -8,18 +8,18 @@ namespace museum_management.Controllers{
     [Authorize (Roles = UserRoles.Restaurator)]
     public class RestaurationController: Controller{
             
-            private readonly MuseumManagementContext _context;
+            private readonly DataLayer.UnitOfWork.IUnitOfWork _unitOfWork;
     
-            public RestaurationController(MuseumManagementContext context) {
-                _context = context;
+            public RestaurationController(DataLayer.UnitOfWork.IUnitOfWork unitOfWork) {
+                _unitOfWork = unitOfWork;
             }
     
-            public async Task<IActionResult> Index() {
+            public IActionResult Index() {
                 
-                var restaurations = await _context.Restaurations.ToListAsync();
+                var restaurations =  _unitOfWork.Restaurations.GetAll().ToList();
                 List<RestaurationViewModel> restaurationViewModels = new List<RestaurationViewModel>();
                 foreach(var restauration in restaurations){
-                    var artwork = await _context.Artworks.FindAsync(restauration.ArtworkId);
+                    var artwork =  _unitOfWork.Artworks.GetById(restauration.ArtworkId);
                     restaurationViewModels.Add(new RestaurationViewModel{
                         ArtworkTitle = restauration.Artwork.Title,
                         Restauration = restauration

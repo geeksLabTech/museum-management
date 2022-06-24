@@ -4,26 +4,26 @@ using DataLayer.Data;
 using PresentationLayer.ViewModels;
 using DataLayer.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
-//using System.Text;
+using DataLayer;
 
 namespace museum_management.Controllers{
     [Authorize(Roles = UserRoles.Director)]
     public class LendingController: Controller{
             
-            private readonly MuseumManagementContext _context;
+            private readonly DataLayer.UnitOfWork.IUnitOfWork _unitOfWork;
     
-            public LendingController(MuseumManagementContext context) {
-                _context = context;
+            public LendingController(Datalayer.UnitOfWork.UnitOfWork unitOfWork) {
+                _unitOfWork = unitOfWork;
             }
     
-            public async Task<IActionResult> Index() {
+            public IActionResult Index() {
                 
-                var lendingToMuseums = await _context.LendingToMuseums.ToListAsync();
+                var lendingToMuseums =  _unitOfWork.Lendings.GetAll();
                 List<LendingViewModel> lendingViewModels = new List<LendingViewModel>();
 
                 foreach (var lending in lendingToMuseums) {
-                    var artwork = await _context.Artworks.FindAsync(lending.ArtworkId);
-                    var museum = await _context.Museums.FindAsync(lending.MuseumId);
+                    var artwork = _unitOfWork.Artworks.GetById(lending.Artwork.Id);
+                    var museum = _unitOfWork.Museums.GetById(lending.MuseumId);
                     lendingViewModels.Add(new LendingViewModel {
                         LendingToMuseum = lending,
                         ArtworkTitle = artwork.Title,
@@ -32,8 +32,8 @@ namespace museum_management.Controllers{
                     });
                 
                 }
-                System.Console.WriteLine(  "mmmm");
-                System.Console.WriteLine("LendingToMuseums: " + lendingToMuseums[0].ArtworkId);
+                // System.Console.WriteLine(  "mmmm");
+                // System.Console.WriteLine("LendingToMuseums: " + lendingToMuseums[0].ArtworkId);
                 return View(lendingViewModels);
             }
     

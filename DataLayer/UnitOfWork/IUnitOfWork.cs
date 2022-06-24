@@ -8,6 +8,7 @@ namespace DataLayer.UnitOfWork
         IArtworkRepository Artworks { get; }
         IRestaurationRepository Restaurations { get; }
         ILendingRepository Lendings { get; }
+        IMuseumRepository Museums {get;}
         int Complete();
     }
 }

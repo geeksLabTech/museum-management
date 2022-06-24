@@ -7,15 +7,16 @@ using PresentationLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using DataLayer.Models.Auth;
-
+using DataLayer;
 
 namespace museum_management.Controllers{
     [AllowAnonymous]
     public class CatalogController : Controller {
-        private readonly MuseumManagementContext _context;
+        
+        private readonly DataLayer.UnitOfWork.IUnitOfWork _unitOfWork;
 
-        public CatalogController(MuseumManagementContext context) {
-            _context = context;
+        public CatalogController(Datalayer.UnitOfWork.UnitOfWork unitOfWork) {
+            _unitOfWork = unitOfWork;
         }
         
         // public async Task<IActionResult> Index() {
@@ -48,12 +49,13 @@ namespace museum_management.Controllers{
             // return View(artworkViewModelList);
         // }
 
-        public async Task<IActionResult> Restaurations(int? id) {
-            if (id == null) {
-                return NotFound();
-            }
+        public IActionResult Restaurations(int id) {
+            // if (id == null) {
+            //     return NotFound();
+            // }
 
-            var restaurations = await _context.Restaurations.Where(r => r.ArtworkId == id).ToListAsync();
+            var restaurations = _unitOfWork.Restaurations.GetById(id);
+            // Where(r => r.ArtworkId == id).ToListAsync();
 
             if (restaurations == null) {
                 return NotFound();
@@ -68,12 +70,11 @@ namespace museum_management.Controllers{
             
         //}
 
-        public async Task<IActionResult> Edit(int? id){
-            if (id == null) {
-                return NotFound();
-            }
+        public IActionResult Edit(int id){
+        
 
-            var artwork = await _context.Artworks.FirstOrDefaultAsync(m => m.Id == id);
+            var artwork = _unitOfWork.Artworks.GetById(id);
+            // FirstOrDefaultAsync(m => m.Id == id);
 
             if (artwork == null) {
                 return NotFound();
@@ -82,13 +83,10 @@ namespace museum_management.Controllers{
             return View(artwork);
         }
 
-        public async Task<IActionResult> Delete(int? id){
-            if (id == null) {
-                return NotFound();
-            }
-
-            var artwork = await _context.Artworks
-                .FirstOrDefaultAsync(m => m.Id == id);
+        public IActionResult Delete(int id){
+        
+            var artwork = _unitOfWork.Artworks.GetById(id);
+                // .FirstOrDefaultAsync(m => m.Id == id);
             if (artwork == null) {
                 return NotFound();
             }
@@ -98,22 +96,21 @@ namespace museum_management.Controllers{
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id){
-            var artwork = await _context.Artworks.FindAsync(id);
-            _context.Artworks.Remove(artwork);
-            await _context.SaveChangesAsync();
+        public IActionResult DeleteConfirmed(int id){
+            var artwork = _unitOfWork.Artworks.GetById(id);
+            _unitOfWork.Artworks.Remove(artwork);
+            _unitOfWork.Complete();
             return RedirectToAction(nameof(Index));
         }
         
         
-        public async Task<IActionResult> Index(string artworkroom)  
+        public IActionResult Index(string artworkroom)  
         {
             
-  
-            IQueryable<string> roomQuery = from m in _context.Artworks
+            var roomQuery = from m in _unitOfWork.Artworks.GetAll()
                                             orderby m.MuseumRoom
                                             select m.MuseumRoom;
-            var artwork = from m in _context.Artworks
+            var artwork = from m in _unitOfWork.Artworks.GetAll()
                          select m;
 
 
@@ -124,8 +121,8 @@ namespace museum_management.Controllers{
 
             var artworkRoomVM = new ArtworkRoomViewModel
             {
-                MuseumRoom = new SelectList(await roomQuery.Distinct().ToListAsync()),
-                Artworks = await artwork.ToListAsync()
+                MuseumRoom = new SelectList( roomQuery.Distinct().ToList()),
+                Artworks = artwork.ToList()
             };
 
             return View(artworkRoomVM);
