@@ -108,22 +108,18 @@ namespace museum_management.Controllers{
         
         public IActionResult Index(string artworkroom)  
         {
-            
-            var roomQuery = from m in _unitOfWork.Artworks.GetAll()
-                                            orderby m.MuseumRoom
-                                            select m.MuseumRoom;
-            var artwork = from m in _unitOfWork.Artworks.GetAll()
-                         select m;
+        
+            var artwork = _unitOfWork.Artworks.GetAll();
 
 
             if (!string.IsNullOrEmpty(artworkroom))
             {
-                artwork = artwork.Where(x => x.MuseumRoom == artworkroom);
+                artwork = _unitOfWork.Artworks.GetArtworksByRoom(artworkroom);
             }
 
             var artworkRoomVM = new ArtworkRoomViewModel
             {
-                MuseumRoom = new SelectList( roomQuery.Distinct().ToList()),
+                MuseumRoom = new SelectList( _unitOfWork.Artworks.GetAll().Select(m => m.MuseumRoom).Distinct()),
                 Artworks = artwork.ToList()
             };
 
