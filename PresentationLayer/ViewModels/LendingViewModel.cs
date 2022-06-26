@@ -6,7 +6,8 @@ using DataLayer.Models;
 namespace PresentationLayer.ViewModels{
 
     public class LendingViewModel {
-        public int Id {get; set;}
+        public int artworkid {get; set;}
+        public int museumid {get; set;}
         public string ArtworkTitle{get; set;}
         public int ArtworkId{get; set;}
         public int MuseumId{get;set;}

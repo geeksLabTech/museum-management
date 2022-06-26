@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Models{
     public class LendingToMuseum{
-        public int Id { get; set; }
+        // public int Id { get; set; }
 
         public int ArtworkId {get; set;}
 

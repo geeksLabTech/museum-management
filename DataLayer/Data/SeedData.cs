@@ -113,7 +113,6 @@ namespace DataLayer.Models{
                 var lendingToMuseums = new LendingToMuseum[] {
                     new LendingToMuseum
                     {
-                        Id = 0,
                         ArtworkId = 1,
                         PeriodInDays = 40,
                         LendingState = LendingState.Lended,
@@ -123,7 +122,7 @@ namespace DataLayer.Models{
                     },
                     new LendingToMuseum
                     {
-                        Id = 1,
+
                         ArtworkId = 2,
                         PeriodInDays = 30,
                         LendingState = LendingState.Returned,
@@ -133,7 +132,6 @@ namespace DataLayer.Models{
                     },
                     new LendingToMuseum
                     {
-                        Id = 2,
                         ArtworkId = 3,
                         PeriodInDays = 20,
                         LendingState = LendingState.Denied,

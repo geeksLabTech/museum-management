@@ -22,13 +22,13 @@ namespace museum_management.Controllers{
                 List<LendingViewModel> lendingViewModels = new List<LendingViewModel>();
 
                 foreach (var lending in lendingToMuseums) {
-                    System.Console.WriteLine(lending.Id);
                     System.Console.WriteLine(lending.ArtworkId);
                     System.Console.WriteLine(lending.MuseumId);
                     var artwork = _unitOfWork.Artworks.GetById(lending.ArtworkId);
                     var museum = _unitOfWork.Museums.GetById(lending.MuseumId);
                     lendingViewModels.Add(new LendingViewModel {
-                        Id = lending.Id,
+                        artworkid = artwork.Id,
+                        museumid = museum.Id,
                         LendingToMuseum = lending,
                         ArtworkTitle = artwork.Title,
                         MuseumName = museum.Name,
@@ -44,13 +44,20 @@ namespace museum_management.Controllers{
                 // var artwork = _unitOfWork.Artworks.GetById(Id);
                 var lending = _unitOfWork.Lendings.GetById(artworkid,museumid);
                 var artwork = _unitOfWork.Artworks.GetById(artworkid);
-                var artworklendingViewModel = new ArtworklendingViewModel 
-                {
-                    Id = lending.Id,
-                    ArtworkTitle = artwork.Title,
-                    Author = artwork.Author,
+                var museum = _unitOfWork.Museums.GetById(museumid);
+                System.Console.WriteLine();
+                var artworklendingViewModel = new ArtworklendingViewModel();
+                artworklendingViewModel.artworkid = artwork.Id;
+                artworklendingViewModel.museumid = museum.Id;
+                artworklendingViewModel.Author = artwork.Author;
+                artworklendingViewModel.ArtworkTitle = artwork.Title;
+                // {
+                
+                //     Id = lending.Id,
+                //     ArtworkTitle = artwork.Title,
+                //     Author = artwork.Author,
                    
-                };
+                // };
                 return View(artworklendingViewModel);
             }
     
