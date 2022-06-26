@@ -95,12 +95,16 @@ namespace DataLayer.Models{
                 );
                 var museums = new Museum[] {
                     new Museum{
+                        Id = 1,
                         Name = "Museum of Modern Art"
                     },
                     new Museum{
+                        Id = 2,
                         Name = "Museum of Fine Arts"
+
                     },
                     new Museum{
+                        Id = 3,
                         Name = "My Museum"
                     }
                 };

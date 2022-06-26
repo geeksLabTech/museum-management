@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(MuseumManagementContext))]
-    [Migration("20220618235616_Second")]
-    partial class Second
+    [Migration("20220626152147_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -358,7 +358,7 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("DataLayer.Models.Restauration", b =>
                 {
                     b.HasOne("DataLayer.Models.Artwork", "Artwork")
-                        .WithMany()
+                        .WithMany("Restaurations")
                         .HasForeignKey("ArtworkId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -438,6 +438,8 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("DataLayer.Models.Artwork", b =>
                 {
                     b.Navigation("LendingToMuseums");
+
+                    b.Navigation("Restaurations");
                 });
 #pragma warning restore 612, 618
         }
