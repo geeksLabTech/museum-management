@@ -5,37 +5,15 @@
 }
 
 
-< table class="table">
-<thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ArtworkTitle)
-        </th>
-    </tr>
+<h2>
+    @Html.DisplayFor(model=> model.ArtworkTitle)
+</h2>
+<h2>
+    @Html.DisplayFor(model=> model.Athor)
 
-</thead>
-<tbody>
-    <tr>
-        <th>
-            @Html.DisplayFor(model=>model.Athor)
-        </th>
-        <th>
-            @Html.DisplayFor(model=> model.MuseumName)
-        </th>
-    </tr>
-</tbody>
-<form>
-    <button>
-        type = "submit" class = "ui-btn"
-        @Html.Partial("Acepted")
+</h2>
 
-    </button>
-    <button>
-        type = "submit" class = "ui-btn"
-        @Html.Partial("Reject")
-        
-    </button>
-</form>
+<a class="btn btn-primary" asp-action="Acepted"  >Acepted</a>
+<a class="btn btn-primary" asp-action="Rejected"  >Rejected</a>
 
-</table>
 

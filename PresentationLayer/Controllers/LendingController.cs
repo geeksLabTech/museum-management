@@ -22,7 +22,10 @@ namespace museum_management.Controllers{
                 List<LendingViewModel> lendingViewModels = new List<LendingViewModel>();
 
                 foreach (var lending in lendingToMuseums) {
-                    var artwork = _unitOfWork.Artworks.GetById(lending.Artwork.Id);
+                    System.Console.WriteLine(lending.Id);
+                    System.Console.WriteLine(lending.ArtworkId);
+                    System.Console.WriteLine(lending.MuseumId);
+                    var artwork = _unitOfWork.Artworks.GetById(lending.ArtworkId);
                     var museum = _unitOfWork.Museums.GetById(lending.MuseumId);
                     lendingViewModels.Add(new LendingViewModel {
                         Id = artwork.Id,
