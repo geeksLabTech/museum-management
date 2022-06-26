@@ -6,5 +6,6 @@ public class LendingToMuseumRepository : Repository<LendingToMuseum>, ILendingRe
     public LendingToMuseumRepository(DbContext context) : base(context)
     {
     }
+     public LendingToMuseum GetById(int artworkid, int museumid) => Context.Set<LendingToMuseum>().Find(artworkid,museumid);
 }
 

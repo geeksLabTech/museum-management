@@ -7,7 +7,7 @@ namespace PresentationLayer.ViewModels{
         public string ArtworkTitle{get; set;}
         
         public string MuseumName {get; set;}
-        public string Athor {get;set;}
+        public string Author {get;set;}
 
         public LendingToMuseum LendingToMuseum {get; set;}
 

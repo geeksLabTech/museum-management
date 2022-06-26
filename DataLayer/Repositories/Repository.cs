@@ -12,7 +12,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     }
 
     public TEntity GetById(int id) => Context.Set<TEntity>().Find(id);
-
+    // public TEntity GetLendingById(int artworkid, int museumid) => Context.Set<TEntity>().Find(artworkid,museumid);
     
     public IEnumerable<TEntity> GetAll() => Context.Set<TEntity>().ToList();
 

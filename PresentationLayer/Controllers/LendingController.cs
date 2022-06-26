@@ -28,7 +28,7 @@ namespace museum_management.Controllers{
                     var artwork = _unitOfWork.Artworks.GetById(lending.ArtworkId);
                     var museum = _unitOfWork.Museums.GetById(lending.MuseumId);
                     lendingViewModels.Add(new LendingViewModel {
-                        Id = artwork.Id,
+                        Id = lending.Id,
                         LendingToMuseum = lending,
                         ArtworkTitle = artwork.Title,
                         MuseumName = museum.Name,
@@ -40,14 +40,15 @@ namespace museum_management.Controllers{
                 // System.Console.WriteLine("LendingToMuseums: " + lendingToMuseums[0].ArtworkId);
                 return View(lendingViewModels);
             }
-            public IActionResult Edit(int Id){
-                var artwork = _unitOfWork.Artworks.GetById(Id);
-                var lending = _unitOfWork.Lendings.GetAll();
+            public IActionResult Edit(int artworkid, int museumid){
+                // var artwork = _unitOfWork.Artworks.GetById(Id);
+                var lending = _unitOfWork.Lendings.GetById(artworkid,museumid);
+                var artwork = _unitOfWork.Artworks.GetById(artworkid);
                 var artworklendingViewModel = new ArtworklendingViewModel 
                 {
-                    Id = artwork.Id,
+                    Id = lending.Id,
                     ArtworkTitle = artwork.Title,
-                    Athor = artwork.Author,
+                    Author = artwork.Author,
                    
                 };
                 return View(artworklendingViewModel);
