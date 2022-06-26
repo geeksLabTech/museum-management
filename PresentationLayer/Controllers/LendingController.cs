@@ -21,7 +21,17 @@ namespace museum_management.Controllers{
                 
                 var lendingToMuseums =  _unitOfWork.Lendings.GetAll();
                 List<LendingViewModel> lendingViewModels = new List<LendingViewModel>();
+                string denied  = LendingState.Denied.ToString();
+                string lended = LendingState.Lended.ToString();
+                string requested = LendingState.Requested.ToString();
+                string returned = LendingState.Returned.ToString();
 
+                List<string> lendingsStates = new List<string>{
+                    denied,
+                    lended,
+                    requested,
+                    returned
+                };
                 foreach (var lending in lendingToMuseums) {
                     var artwork = _unitOfWork.Artworks.GetById(lending.ArtworkId);
                     var museum = _unitOfWork.Museums.GetById(lending.MuseumId);
@@ -33,6 +43,7 @@ namespace museum_management.Controllers{
                         LendingToMuseum = lending,
                         ArtworkTitle = artwork.Title,
                         MuseumName = museum.Name,
+                        StateList = lendingsStates
                         
                     });
                    
