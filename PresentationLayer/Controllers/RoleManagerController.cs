@@ -62,7 +62,7 @@ namespace museum_management.Controllers {
                 }
                 model.Add(userRolesViewModel);
             }
-            return RedirectToAction("Index", "User");
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string userId)
@@ -85,7 +85,7 @@ namespace museum_management.Controllers {
                 ModelState.AddModelError("", "Cannot add selected roles to user");
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "User");
         }
     }
 }
