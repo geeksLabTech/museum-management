@@ -36,7 +36,8 @@ namespace museum_management.Controllers
                 var actualRoles = new List<string>();
                 foreach (var role in rolList)
                 {
-                    actualRoles.Add(string.Join(",", role));
+
+                    actualRoles.Add(role + ", ");
                 }
                 actualUser.Role = actualRoles;
 
