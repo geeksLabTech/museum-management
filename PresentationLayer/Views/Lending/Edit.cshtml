@@ -16,7 +16,7 @@
     @Html.DisplayFor(model => model.MuseumName)
 </h2>
 
-<a class="btn btn-primary" asp-action="Accepted" asp-route-artworkId="@Model.ArtworkId" asp-route-museumId="@Model.MuseumId" >Accepted</a>
-<a class="btn btn-primary" asp-action="Rejected"  >Rejected</a>
+<a class="btn btn-primary" asp-action="Accept" asp-route-artworkId="@Model.ArtworkId" asp-route-museumId="@Model.MuseumId" >Accepted</a>
+<a class="btn btn-primary" asp-action="Reject" asp-route-artworkId="@Model.ArtworkId" asp-route-museumId="@Model.MuseumId">Rejected</a>
 
 

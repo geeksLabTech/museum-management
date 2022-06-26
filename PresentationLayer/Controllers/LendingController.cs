@@ -57,7 +57,7 @@ namespace museum_management.Controllers{
                 return View(artworklendingViewModel);
             }
 
-            public IActionResult Accepted(int artworkId, int museumId){
+            public IActionResult Accept(int artworkId, int museumId){
                 var lending = _unitOfWork.Lendings.GetById(artworkId,museumId);
                 lending.LendingState = LendingState.Lended;
                 // _unitOfWork.Lendings.Update(lending);
