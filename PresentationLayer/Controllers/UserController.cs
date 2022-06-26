@@ -31,9 +31,15 @@ namespace museum_management.Controllers
                 var rolList = await _userManager.GetRolesAsync(user);
                 var actualUser = new User();
                 actualUser.Name = user.UserName;
-                
+                actualUser.Id = user.Id;
                 actualUser.Email = user.Email;
-                actualUser.Role = rolList.ToList();
+                var actualRoles = new List<string>();
+                foreach (var role in rolList)
+                {
+                    actualRoles.Add(string.Join(",", role));
+                }
+                actualUser.Role = actualRoles;
+
 
                 //User actualUser = new User(int.Parse(user.Id),user.UserName,user.Email,user.PasswordHash,rolList.ToList());
                 users.Add(actualUser);
@@ -99,19 +105,42 @@ namespace museum_management.Controllers
         //         }
         //     }
         // }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+
+        // GET: Movies/Details/5
+        public async Task<IActionResult> Delete(string? id)
         {
-            
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var user = await _userManager.FindByIdAsync(id.ToString());
+            System.Console.WriteLine("usuario nulo en get **********");
             if (user == null)
             {
                 return NotFound();
             }
+
+            return View(user);
+        }
+
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            System.Console.WriteLine("**************************");
+            System.Console.WriteLine("**************************");
+            if (user == null)
+            {
+                return NotFound();
+            }
+            System.Console.WriteLine("mura user pa borrar");
+            System.Console.WriteLine(user.Email);
             await _userManager.DeleteAsync(user);
             
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "User");
         }
     }
 }
