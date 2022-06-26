@@ -1,9 +1,15 @@
-@model DataLayer.Models.User
 
+@model Microsoft.AspNetCore.Identity.IdentityUser
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete User";
 }
 
-<h1>Delete</h1>
-
-<h4>Users</h4>
+<header>
+    <h1>@ViewData["Title"]</h1>
+    @{
+        
+        <form class="form-inline" asp-controller="User" asp-action="Delete" method="post">
+            <button type="submit" class="nav-link btn btn-link text-dark">Click here to Confirm Delete</button>
+        </form>
+    }
+</header>
