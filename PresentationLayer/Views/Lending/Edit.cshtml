@@ -1,0 +1,41 @@
+@model PresentationLayer.ViewModels.ArtworklendingViewModel
+@* @using PresentationLayer.Controllers *@
+@{
+    ViewData["Title"] = "Datails Artwork";
+}
+
+
+< table class="table">
+<thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ArtworkTitle)
+        </th>
+    </tr>
+
+</thead>
+<tbody>
+    <tr>
+        <th>
+            @Html.DisplayFor(model=>model.Athor)
+        </th>
+        <th>
+            @Html.DisplayFor(model=> model.MuseumName)
+        </th>
+    </tr>
+</tbody>
+<form>
+    <button>
+        type = "submit" class = "ui-btn"
+        @Html.Partial("Acepted")
+
+    </button>
+    <button>
+        type = "submit" class = "ui-btn"
+        @Html.Partial("Reject")
+        
+    </button>
+</form>
+
+</table>
+
