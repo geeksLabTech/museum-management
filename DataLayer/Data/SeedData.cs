@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using DataLayer.Data;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using DataLayer.Models.Auth;
 
 namespace DataLayer.Models{
     public static class SeedData {
@@ -10,6 +12,7 @@ namespace DataLayer.Models{
             using (var context = new MuseumManagementContext(
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MuseumManagementContext>>())) {
+
                 // Look for any artworks.
                 if (context.Artworks.Any()) {
                     context.RemoveRange(context.Artworks);
@@ -151,6 +154,30 @@ namespace DataLayer.Models{
                 var x = context.LendingToMuseums.ToList();
                 System.Console.WriteLine( x[0].Artwork.Title);
             }
+
+            
+        }
+
+        public static async void CreateRolesAsync (IServiceProvider serviceProvider) {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string[] roleNames = { UserRoles.Admin, UserRoles.CatalogManager, UserRoles.Director, UserRoles.Restaurator };
+            IdentityResult roleResult;
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await roleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+        }
+
+        public static async void CreateAdminAsync (IServiceProvider serviceProvider) {
+            // Work in progress
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var user = new IdentityUser() { UserName = "admin", Email = "admin@gmail.com", PasswordHash = ""};
+            await userManager.AddToRoleAsync(user, UserRoles.Admin);
         }
     }
 }

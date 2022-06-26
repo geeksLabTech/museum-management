@@ -7,6 +7,7 @@ using DataLayer.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -77,6 +78,8 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     SeedData.Initialize(services);
+    SeedData.CreateRolesAsync(services);
+   
 }
 
 // Configure the HTTP request pipeline.
