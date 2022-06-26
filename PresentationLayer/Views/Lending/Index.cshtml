@@ -45,7 +45,7 @@
                     @Html.DisplayFor(modelItem => item.LendingToMuseum.LendingState)
                 </td>
             </tr>
-            
+            <a asp-action="Edit" asp-route-id="@item.Id" >Edit</a>
         }
     </tbody>
 </table>
