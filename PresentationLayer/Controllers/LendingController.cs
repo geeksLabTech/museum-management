@@ -4,6 +4,7 @@ using DataLayer.Data;
 using PresentationLayer.ViewModels;
 using DataLayer.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using DataLayer;
 using DataLayer.UnitOfWork;
 namespace museum_management.Controllers{
@@ -25,6 +26,8 @@ namespace museum_management.Controllers{
                     var artwork = _unitOfWork.Artworks.GetById(lending.ArtworkId);
                     var museum = _unitOfWork.Museums.GetById(lending.MuseumId);
                     lendingViewModels.Add(new LendingViewModel {
+                        State = new SelectList(_unitOfWork.Lendings.GetAll().Select(m => m.LendingState).Distinct()),
+                        Lendings = _unitOfWork.Lendings.GetAll().ToList(),
                         ArtworkId = lending.ArtworkId,
                         MuseumId = lending.MuseumId,
                         LendingToMuseum = lending,
@@ -32,7 +35,9 @@ namespace museum_management.Controllers{
                         MuseumName = museum.Name,
                         
                     });
-                
+                   
+
+
                 }
                 // System.Console.WriteLine(  "mmmm");
                 // System.Console.WriteLine("LendingToMuseums: " + lendingToMuseums[0].ArtworkId);
@@ -69,6 +74,7 @@ namespace museum_management.Controllers{
                 lending.LendingState = LendingState.Denied;
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
+                
 
             }
     

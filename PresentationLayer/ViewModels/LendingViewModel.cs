@@ -2,6 +2,7 @@
 
 
 using DataLayer.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PresentationLayer.ViewModels{
 
@@ -10,7 +11,9 @@ namespace PresentationLayer.ViewModels{
         public int ArtworkId{get; set;}
         public int MuseumId{get;set;}
         public string MuseumName {get; set;}
-
+        public SelectList? State {get; set;}
+        
+        public List<LendingToMuseum> Lendings{get;set;}
         public LendingToMuseum LendingToMuseum {get; set;}
 
 

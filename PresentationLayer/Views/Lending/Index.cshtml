@@ -6,6 +6,16 @@
 
 <h1>Lendings</h1>
 
+<form asp-controller= "Lending" asp-action="Index" method="get">
+    <p>
+        <select asp-for="@Model" asp-items="Model.State">
+            <option value="">All</option>
+        </select>
+        @* <input type="submit" value="Filter"/> *@
+        @* Title: <input type="text" name="Artworkroom " /> *@
+        <input type="submit" value="Filter" /> 
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -45,8 +55,10 @@
                     @Html.DisplayFor(modelItem => item.LendingToMuseum.LendingState)
                 </td>
                 <td>
-                <a asp-action="Edit" asp-route-artworkId ="@item.ArtworkId" asp-route-museumId ="@item.MuseumId" >Edit</a>
-
+                @if(@item.LendingToMuseum.LendingState == LendingState.Requested)
+                   {
+                     <a asp-action="Edit" asp-route-artworkId ="@item.ArtworkId" asp-route-museumId ="@item.MuseumId" >Edit</a>
+                   } 
                 </td>
             </tr>
             
