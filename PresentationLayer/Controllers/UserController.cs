@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using DataLayer.Models;
+using DataLayer.Repositories;
+using DataLayer.UnitOfWork;
 
 namespace museum_management.Controllers
 {
@@ -17,14 +19,16 @@ namespace museum_management.Controllers
 
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
         
 
-        public UserController(UserManager<IdentityUser> userManager , RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager) 
+        public UserController(UserManager<IdentityUser> userManager , RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager, IUnitOfWork unitOfWork)
         {
-           _userManager = userManager;
-           _roleManager = roleManager;   
-           
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
         }
+
         public async Task<IActionResult> Index()
         {
             List<User> users = new List<User>();
@@ -112,13 +116,17 @@ namespace museum_management.Controllers
         // GET: Movies/Details/5
         public async Task<IActionResult> Delete(string? id)
         {
+            var deletedBy = await _userManager.GetUserAsync(HttpContext.User);
+            if(deletedBy.Id == id){
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
             }
 
             var user = await _userManager.FindByIdAsync(id.ToString());
-            System.Console.WriteLine("usuario nulo en get **********");
+            
             if (user == null)
             {
                 return NotFound();
@@ -131,18 +139,26 @@ namespace museum_management.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            
+            var deletedBy = await _userManager.GetUserAsync(HttpContext.User);
+            if(deletedBy.Id == id){
+                return Unauthorized();
+            }
             var user = await _userManager.FindByIdAsync(id.ToString());
-            System.Console.WriteLine("**************************");
-            System.Console.WriteLine("**************************");
+            
             if (user == null)
             {
                 return NotFound();
             }
-            System.Console.WriteLine("mura user pa borrar");
-            System.Console.WriteLine(user.Email);
-            await _userManager.DeleteAsync(user);
             
+            
+            var rolList = await _userManager.GetRolesAsync(user);
+            DeletedUser deletedUser = new DeletedUser();
+            _unitOfWork.DeletedUsers.Add(DeletedUser.Create(user, deletedBy.Email, rolList.ToList()));
+            await _userManager.DeleteAsync(user);
+            var check = _unitOfWork.DeletedUsers.GetAll();
+            foreach(var x in check){
+                System.Console.WriteLine(x.Name);
+            }
             return RedirectToAction("Index", "User");
         }
     }

@@ -51,6 +51,35 @@ namespace DataLayer.Migrations
                     b.ToTable("Artwork", (string)null);
                 });
 
+            modelBuilder.Entity("DataLayer.Models.DeletedUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeletedUser", (string)null);
+                });
+
             modelBuilder.Entity("DataLayer.Models.LendingToMuseum", b =>
                 {
                     b.Property<int>("ArtworkId")

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(MuseumManagementContext))]
-    [Migration("20220627160512_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220627212849_DeletedUser")]
+    partial class DeletedUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,6 +51,35 @@ namespace DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Artwork", (string)null);
+                });
+
+            modelBuilder.Entity("DataLayer.Models.DeletedUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeletedUser", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.LendingToMuseum", b =>
