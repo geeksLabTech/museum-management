@@ -35,10 +35,9 @@
                     @Html.DisplayFor(modelItem => item.Role)
                 </td>
                 <td>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id" >Edit</a>
                     <a class="btn btn-primary" asp-controller="RoleManager" asp-action="Manage" asp-route-userId="@item.Id">Manage Roles</a>
                     <a class="btn btn-primary" asp-controller="User" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    <a class="btn btn-primary" asp-action="Detail" asp-route-id="@item">Detail</a>
+                    <a class="btn btn-primary" asp-controller = "User" asp-action="Detail" asp-route-id="@item.Id">Detail</a>
                 </td>
             </tr>
         }

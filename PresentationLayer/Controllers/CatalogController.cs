@@ -20,41 +20,9 @@ namespace museum_management.Controllers{
         public CatalogController(IUnitOfWork unitOfWork) {
             _unitOfWork = unitOfWork;
         }
-        
-        // public async Task<IActionResult> Index() {
-            // var artworks = await _context.Artworks.ToListAsync();
-            // var restaurations = await _context.Restaurations.ToListAsync();
-            // var lendingToMuseums = await _context.LendingToMuseums.ToListAsync();
-// 
-            // var artworkViewModelList = new List<ArtworkViewModel>();
-// 
-            // foreach (var artwork in artworks) {
-                // var artworkViewModel = new ArtworkViewModel();
-                // artworkViewModel.Artwork = artwork;
-                // artworkViewModel.Restaurations = new List<Restauration>();
-                // artworkViewModel.ActualMuseum = "My Museum";
-                // foreach (var restauration in restaurations) {
-                    // if (restauration.ArtworkId == artwork.Id) {
-                        // artworkViewModel.Restaurations.Add(restauration);
-                    // }
-                // }
-                // /*
-                // foreach (var lendingToMuseum in lendingToMuseums) {
-                    // if (lendingToMuseum.ArtworkId == artwork.Id && !lendingToMuseum.IsFinished) {
-                        // artworkViewModel.ActualMuseum = lendingToMuseum.Museum.Name;
-                    // }
-                // }
-                // */
-                // artworkViewModelList.Add(artworkViewModel);
-            // } 
-// 
-            // return View(artworkViewModelList);
-        // }
-
+    
         public IActionResult Restaurations(int id) {
-            // if (id == null) {
-            //     return NotFound();
-            // }
+          
 
             var restaurations = _unitOfWork.Restaurations.GetById(id);
             // Where(r => r.ArtworkId == id).ToListAsync();
@@ -68,9 +36,7 @@ namespace museum_management.Controllers{
 
         }
 
-        //public IActionResult Create(){
-            
-        //}
+       
 
         public IActionResult Edit(int id){
         

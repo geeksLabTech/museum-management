@@ -17,16 +17,16 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @if (User.Identity.IsAuthenticated && User.IsInRole("Restaurador"))
+                @if ( User.IsInRole("Restaurador"))
                 {
                     <a class="nav-link text-dark" asp-area="" asp-controller="Restauration" asp-action = "Index">Restauration</a>
                 }
-               @if (User.Identity.IsAuthenticated && User.IsInRole("Director"))
+               @if ( User.IsInRole("Director"))
                { 
                   <a class="nav-link text-dark" asp-area="" asp-controller="Lending" asp-action = "Index">Lending</a>
                }
                     
-               @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+               @if ( User.IsInRole("Admin"))
                { 
                   
                   <a class ="nav-link text-dark" asp-area="" asp-controller="User" asp-action = "Index">User Management</a>

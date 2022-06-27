@@ -72,6 +72,7 @@ namespace museum_management.Controllers{
                 // };
                 return View(artworklendingViewModel);
             }
+            
 
             public IActionResult Accept(int artworkId, int museumId){
                 var lending = _unitOfWork.Lendings.GetById(artworkId,museumId);
