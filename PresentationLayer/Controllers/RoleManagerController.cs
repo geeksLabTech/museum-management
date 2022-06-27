@@ -87,7 +87,8 @@ namespace museum_management.Controllers {
                 ModelState.AddModelError("", "Cannot add selected roles to user");
                 return View(model);
             }
-            await _signInManager.SignInAsync(user, isPersistent: false);
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            await _signInManager.SignInAsync(currentUser, isPersistent: false);
             return RedirectToAction("Index", "User");
         }
     }
