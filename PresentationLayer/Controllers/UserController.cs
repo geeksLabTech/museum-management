@@ -17,11 +17,13 @@ namespace museum_management.Controllers
 
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        
 
-        public UserController(UserManager<IdentityUser> userManager , RoleManager<IdentityRole> roleManager) 
+        public UserController(UserManager<IdentityUser> userManager , RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager) 
         {
            _userManager = userManager;
            _roleManager = roleManager;   
+           
         }
         public async Task<IActionResult> Index()
         {

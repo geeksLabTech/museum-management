@@ -10,10 +10,12 @@ namespace museum_management.Controllers {
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
-        public RoleManagerController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        private readonly SignInManager<IdentityUser> _signInManager;
+        public RoleManagerController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
     
         public async Task<IActionResult> Index()
@@ -85,6 +87,7 @@ namespace museum_management.Controllers {
                 ModelState.AddModelError("", "Cannot add selected roles to user");
                 return View(model);
             }
+            await _signInManager.SignInAsync(user, isPersistent: false);
             return RedirectToAction("Index", "User");
         }
     }
