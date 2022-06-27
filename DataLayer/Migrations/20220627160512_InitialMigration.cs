@@ -254,7 +254,7 @@ namespace DataLayer.Migrations
                     ArtworkId = table.Column<int>(type: "INTEGER", nullable: false),
                     MuseumId = table.Column<int>(type: "INTEGER", nullable: false),
                     Amount = table.Column<int>(type: "INTEGER", nullable: false),
-                    LendingState = table.Column<int>(type: "INTEGER", nullable: false),
+                    LendingState = table.Column<string>(type: "TEXT", nullable: false),
                     PeriodInDays = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

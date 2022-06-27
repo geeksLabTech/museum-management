@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(MuseumManagementContext))]
-    [Migration("20220626152147_InitialMigration")]
+    [Migration("20220627160512_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,8 +64,9 @@ namespace DataLayer.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("LendingState")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("LendingState")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PeriodInDays")
                         .HasColumnType("INTEGER");

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DataLayer;
 using DataLayer.UnitOfWork;
+using DataLayer.Models;
+
 namespace museum_management.Controllers{
     [Authorize(Roles = UserRoles.Director)]
     public class LendingController: Controller{
@@ -17,43 +19,47 @@ namespace museum_management.Controllers{
                 _unitOfWork = unitOfWork;
             }
     
-            public IActionResult Index() {
-                
-                var lendingToMuseums =  _unitOfWork.Lendings.GetAll();
+            public IActionResult Index(string? currentLendingState) {
+                System.Console.WriteLine("SearchState");
+                System.Console.WriteLine(currentLendingState);
+                IEnumerable<LendingToMuseum> lendingToMuseums;
                 List<LendingViewModel> lendingViewModels = new List<LendingViewModel>();
-                string denied  = LendingState.Denied.ToString();
-                string lended = LendingState.Lended.ToString();
-                string requested = LendingState.Requested.ToString();
-                string returned = LendingState.Returned.ToString();
 
-                List<string> lendingsStates = new List<string>{
-                    denied,
-                    lended,
-                    requested,
-                    returned
-                };
+                if(currentLendingState != null) {
+                    lendingToMuseums = _unitOfWork.Lendings.GetLendingsByState(currentLendingState);
+                }
+                else{
+                    lendingToMuseums = _unitOfWork.Lendings.GetAll();
+                }
                 foreach (var lending in lendingToMuseums) {
                     var artwork = _unitOfWork.Artworks.GetById(lending.ArtworkId);
                     var museum = _unitOfWork.Museums.GetById(lending.MuseumId);
                     lendingViewModels.Add(new LendingViewModel {
-                        State = new SelectList(_unitOfWork.Lendings.GetAll().Select(m => m.LendingState).Distinct()),
-                        Lendings = _unitOfWork.Lendings.GetAll().ToList(),
+                        
                         ArtworkId = lending.ArtworkId,
                         MuseumId = lending.MuseumId,
                         LendingToMuseum = lending,
                         ArtworkTitle = artwork.Title,
                         MuseumName = museum.Name,
-                        StateList = lendingsStates
+                        
                         
                     });
-                   
-
-
                 }
+                    // Create LendingTableViewModel
+                LendingTableViewModel lendingTableViewModel = new LendingTableViewModel
+                {
+                    CurrentLendingState=currentLendingState==null ? "" : currentLendingState,
+                    LendingStateList = new SelectList(_unitOfWork.Lendings.GetAll().Select(m => m.LendingState).Distinct()),
+                    LendingViewModels = lendingViewModels
+                    
+                };
+                   
                 // System.Console.WriteLine(  "mmmm");
                 // System.Console.WriteLine("LendingToMuseums: " + lendingToMuseums[0].ArtworkId);
-                return View(lendingViewModels);
+                return View(lendingTableViewModel);
             }
+
+
             public IActionResult Edit(int artworkId, int museumId){
                 var lending = _unitOfWork.Lendings.GetById(artworkId,museumId);
                 var artwork = _unitOfWork.Artworks.GetById(artworkId);

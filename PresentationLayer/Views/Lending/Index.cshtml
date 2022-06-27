@@ -1,4 +1,4 @@
-@model List<PresentationLayer.ViewModels.LendingViewModel>
+@model PresentationLayer.ViewModels.LendingTableViewModel
 
 @{
     ViewData["Title"] = "Lendings";
@@ -8,7 +8,7 @@
 
 <form asp-controller= "Lending" asp-action="Index" method="get">
     <p>
-        <select asp-items="@Model[0].State">
+        <select asp-for="CurrentLendingState" asp-items="Model.LendingStateList">
             <option value="">All</option>
         </select>
         <input type="submit" value="Filter"/> 
@@ -19,23 +19,23 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model[0].ArtworkTitle)
+                @Html.DisplayNameFor(model => model.LendingViewModels[0].ArtworkTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].MuseumName)
+                @Html.DisplayNameFor(model => model.LendingViewModels[0].MuseumName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].LendingToMuseum.Amount)
+                @Html.DisplayNameFor(model => model.LendingViewModels[0].LendingToMuseum.Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].LendingToMuseum.PeriodInDays)
+                @Html.DisplayNameFor(model => model.LendingViewModels[0].LendingToMuseum.PeriodInDays)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].LendingToMuseum.LendingState)
+                @Html.DisplayNameFor(model => model.LendingViewModels[0].LendingToMuseum.LendingState)
             </th>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.LendingViewModels)
         {
             <tr>
                 <td>

@@ -9,7 +9,7 @@ public class LendingToMuseumRepository : Repository<LendingToMuseum>, ILendingRe
      public LendingToMuseum GetById(int artworkid, int museumid) => Context.Set<LendingToMuseum>().Find(artworkid,museumid);
      public IEnumerable<LendingToMuseum> GetLendingsByState(string state)
         {
-            return this.Find(x => x.LendingState.ToString() == state);
+            return this.Find(x => x.LendingState == state);
         }
 
 }

@@ -62,8 +62,9 @@ namespace DataLayer.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("LendingState")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("LendingState")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PeriodInDays")
                         .HasColumnType("INTEGER");
