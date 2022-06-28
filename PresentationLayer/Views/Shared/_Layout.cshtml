@@ -31,10 +31,10 @@
                   
                   <a class ="nav-link text-dark" asp-area="" asp-controller="User" asp-action = "Index">User Management</a>
                }
-               @* @if(User.IsInRole("CatalogManager")) *@
-               @* { *@
+               @if(User.IsInRole("Encargado del Catalogo")) 
+                { 
                    <a class ="nav-link text-dark" asp-area="" asp-controller="AddArtwork" asp-action = "Index">Add Artwork</a>
-               @* } *@
+                } 
                     
                 <div class="navbar-collapse d-flex flex-row-reverse">
                     <ul class="navbar-nav">

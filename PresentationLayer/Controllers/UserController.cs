@@ -115,6 +115,7 @@ namespace museum_management.Controllers
             DeletedUser deletedUser = new DeletedUser();
             _unitOfWork.DeletedUsers.Add(DeletedUser.Create(user, deletedBy.Email, rolList.ToList()));
             await _userManager.DeleteAsync(user);
+            _unitOfWork.Complete();
             var check = _unitOfWork.DeletedUsers.GetAll();
             foreach(var x in check){
                 System.Console.WriteLine(x.Name);

@@ -92,15 +92,10 @@ namespace museum_management.Controllers{
         //     return View(artworkRoomVM);
         // }
         
-        public  IActionResult Index(string artworkroom,Artwork artwork)
+        public  IActionResult Index(string artworkroom)
         {
-            
-            System.Console.WriteLine("lalal" + artwork);
             var artworks = _unitOfWork.Artworks.GetAll().ToList();
-            if (artwork != null){
-
-              artworks.Add(artwork);
-            }
+            
             if (!string.IsNullOrEmpty(artworkroom))
             {
                 artworks = _unitOfWork.Artworks.GetArtworksByRoom(artworkroom).ToList();
