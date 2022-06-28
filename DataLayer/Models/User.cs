@@ -18,14 +18,7 @@ namespace DataLayer.Models{
         // public Role Role {get; set;}
         public List<string>? Role {get;set;}
         
-        // public User (int Id,string Name , string Email , string Password , List<string> Role )
-        // {
-        //     this.Id = Id;
-        //     this.Name = Name;
-        //     this.Email = Email;
-        //     this.Password = Password;
-        //     this.Role = Role;
-        // }
+        
 
     }
 }
