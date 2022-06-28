@@ -71,22 +71,45 @@ namespace museum_management.Controllers{
             return RedirectToAction(nameof(Index));
         }
         
+        // [HttpGet]
+        // public IActionResult Index(string artworkroom)  
+        // {
         
-        public IActionResult Index(string artworkroom)  
+        //     var artwork = _unitOfWork.Artworks.GetAll();
+
+
+        //     if (!string.IsNullOrEmpty(artworkroom))
+        //     {
+        //         artwork = _unitOfWork.Artworks.GetArtworksByRoom(artworkroom);
+        //     }
+
+        //     var artworkRoomVM = new ArtworkRoomViewModel
+        //     {
+        //         MuseumRoom = new SelectList( _unitOfWork.Artworks.GetAll().Select(m => m.MuseumRoom).Distinct()),
+        //         Artworks = artwork.ToList()
+        //     };
+
+        //     return View(artworkRoomVM);
+        // }
+        
+        public  IActionResult Index(string artworkroom,Artwork artwork)
         {
-        
-            var artwork = _unitOfWork.Artworks.GetAll();
+            
+            System.Console.WriteLine("lalal" + artwork);
+            var artworks = _unitOfWork.Artworks.GetAll().ToList();
+            if (artwork != null){
 
-
+              artworks.Add(artwork);
+            }
             if (!string.IsNullOrEmpty(artworkroom))
             {
-                artwork = _unitOfWork.Artworks.GetArtworksByRoom(artworkroom);
+                artworks = _unitOfWork.Artworks.GetArtworksByRoom(artworkroom).ToList();
             }
 
             var artworkRoomVM = new ArtworkRoomViewModel
             {
                 MuseumRoom = new SelectList( _unitOfWork.Artworks.GetAll().Select(m => m.MuseumRoom).Distinct()),
-                Artworks = artwork.ToList()
+                Artworks = artworks
             };
 
             return View(artworkRoomVM);

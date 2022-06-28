@@ -28,7 +28,8 @@ namespace museum_management.Controllers{
         [HttpPost]
         public IActionResult Index(Artwork artwork)
         {
-            return View();
+            
+            return RedirectToAction("Index" ,"Catalog");
         }
        
 
