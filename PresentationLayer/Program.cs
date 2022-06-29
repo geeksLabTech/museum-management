@@ -18,22 +18,25 @@ using BusinessLogicLayer.BackgroundTaskQueue;
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
-IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((hostContext, services) =>
-    {
-        services.AddSingleton<MonitorLoop>();
-        services.AddHostedService<QueuedHostedService>();
-        services.AddSingleton<IBackgroundTaskQueue>(ctx =>
-        {
-            if (!int.TryParse(hostContext.Configuration["QueueCapacity"], out var queueCapacity))
-                queueCapacity = 100;
-            return new BackgroundTaskQueue(queueCapacity);
-        });
-    })
-    .Build();
+// IHost host = Host.CreateDefaultBuilder(args)
+//     .ConfigureServices((hostContext, services) =>
+//     {
+//         services.AddSingleton<MonitorLoop>();
+//         services.AddHostedService<QueuedHostedService>();
+//         services.AddSingleton<IBackgroundTaskQueue>(ctx =>
+//         {
+//             if (!int.TryParse(hostContext.Configuration["QueueCapacity"], out var queueCapacity))
+//                 queueCapacity = 100;
+//             return new BackgroundTaskQueue(queueCapacity);
+//         });
+//     })
+//     .Build();
 
-builder.Services.AddDbContext<MuseumManagementContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("MuseumManagementContext")));
+ builder.Services.AddDbContext<MuseumManagementContext>(options =>
+     options.UseSqlite(builder.Configuration.GetConnectionString("MuseumManagementContext")));
+
+// builder.Services.AddDbContext<MuseumManagementContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("MuseumManagementContext")));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultUI()
@@ -96,8 +99,8 @@ using (var scope = app.Services.CreateScope())
 
     SeedData.Initialize(services);
     SeedData.CreateRolesAsync(services);
-    var monitorLoop = host.Services.GetRequiredService<MonitorLoop>();
-    monitorLoop.StartMonitorLoop();
+    // var monitorLoop = host.Services.GetRequiredService<MonitorLoop>();
+    // monitorLoop.StartMonitorLoop();
    
 }
 

@@ -19,7 +19,7 @@ namespace DataLayer.Data
         public DbSet<Sculpture> Sculptures {get; set;}
         public DbSet<LendingToMuseum> LendingToMuseums {get; set;}
         public DbSet<Restauration> Restaurations {get; set;}
-        public DbSet<DeletedUser> DeletedUsers {get; set;}
+        // public DbSet<DeletedUser> DeletedUsers {get; set;}
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
@@ -30,22 +30,22 @@ namespace DataLayer.Data
             modelBuilder.Entity<Sculpture>().ToTable("Sculpture");
             modelBuilder.Entity<LendingToMuseum>().ToTable("LendingToMuseum");
             modelBuilder.Entity<Restauration>().ToTable("Restauration");
-            modelBuilder.Entity<DeletedUser>(x => {
-                x.ToTable("DeletedUser");
-                x.HasKey(d => d.Id);
-                x.Property(d => d.Role).HasConversion(
-                    from => string.Join(";", from),
-                    to => string.IsNullOrEmpty(to)
-                        ? new List<string>()
-                        : to.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList(),
-                    new ValueComparer<List<string>>(
-                        (c1, c2) => c1.SequenceEqual(c2),
-                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                        c => c.ToList()
-                    )
+            // modelBuilder.Entity<DeletedUser>(x => {
+            //     x.ToTable("DeletedUser");
+            //     x.HasKey(d => d.Id);
+            //     x.Property(d => d.Role).HasConversion(
+            //         from => string.Join(";", from),
+            //         to => string.IsNullOrEmpty(to)
+            //             ? new List<string>()
+            //             : to.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList(),
+            //         new ValueComparer<List<string>>(
+            //             (c1, c2) => c1.SequenceEqual(c2),
+            //             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+            //             c => c.ToList()
+            //         )
                     
-                );
-            });
+            //     );
+            // });
             
 
             modelBuilder.Entity<Restauration>()

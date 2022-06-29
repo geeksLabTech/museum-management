@@ -119,7 +119,7 @@ namespace DataLayer.Models{
                     {
                         ArtworkId = 1,
                         PeriodInDays = 40,
-                        LendingState = LendingState.Lended,
+                        LendingState = LendingState.Requested,
                         Artwork = artworks[0],
                         Museum = museums[0],
                         MuseumId = 1
@@ -129,7 +129,7 @@ namespace DataLayer.Models{
 
                         ArtworkId = 2,
                         PeriodInDays = 30,
-                        LendingState = LendingState.Returned,
+                        LendingState = LendingState.Requested,
                         Artwork = artworks[1],
                         Museum = museums[1],
                         MuseumId = 2
@@ -138,7 +138,7 @@ namespace DataLayer.Models{
                     {
                         ArtworkId = 3,
                         PeriodInDays = 20,
-                        LendingState = LendingState.Denied,
+                        LendingState = LendingState.Requested,
                         Artwork = artworks[2],
                         Museum = museums[1],
                         MuseumId = 3
