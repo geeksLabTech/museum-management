@@ -29,21 +29,20 @@ namespace museum_management.Controllers{
 
                 return View(restaurationViewModels);
             }
-            /*
-            public async Task<IActionResult> Restaurations(int? id) {
-                if (id == null) {
-                    return NotFound();
-                }
+            
+            public IActionResult Restaurations(int id) {
+                
     
-                var restaurations = await _context.Restaurations.Where(r => r.ArtworkId == id).ToListAsync();
+                var restaurations = _unitOfWork.Restaurations.GetById(id);
     
                 if (restaurations == null) {
                     return NotFound();
                 }
-    
+                else
+                restaurations.StartDate = DateTime.Now;
                 return View(restaurations);
     
             }
-            */
+            
     }
 }

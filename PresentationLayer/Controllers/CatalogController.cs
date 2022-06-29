@@ -71,27 +71,6 @@ namespace museum_management.Controllers{
             return RedirectToAction(nameof(Index));
         }
         
-        // [HttpGet]
-        // public IActionResult Index(string artworkroom)  
-        // {
-        
-        //     var artwork = _unitOfWork.Artworks.GetAll();
-
-
-        //     if (!string.IsNullOrEmpty(artworkroom))
-        //     {
-        //         artwork = _unitOfWork.Artworks.GetArtworksByRoom(artworkroom);
-        //     }
-
-        //     var artworkRoomVM = new ArtworkRoomViewModel
-        //     {
-        //         MuseumRoom = new SelectList( _unitOfWork.Artworks.GetAll().Select(m => m.MuseumRoom).Distinct()),
-        //         Artworks = artwork.ToList()
-        //     };
-
-        //     return View(artworkRoomVM);
-        // }
-        
         public  IActionResult Index(string artworkroom)
         {
             var artworks = _unitOfWork.Artworks.GetAll().ToList();
@@ -100,11 +79,30 @@ namespace museum_management.Controllers{
             {
                 artworks = _unitOfWork.Artworks.GetArtworksByRoom(artworkroom).ToList();
             }
+            var lastResaturation = new List<DateTime>();
+            var restaurations = _unitOfWork.Restaurations.GetAll().ToList();
+            
+            foreach(var art in artworks)
+            {
+                var restaurationActual = new List<Restauration>();
+                foreach(var rest in restaurations)
+                {
+                    if (art.Id == rest.ArtworkId) restaurationActual.Add(rest);
+                }
 
+                if(restaurationActual.Count == 0) 
+                {
+                    lastResaturation.Add(art.EntryDate);
+                }
+                else
+                lastResaturation.Add(restaurationActual[restaurationActual.Count-1].EndDate);
+                
+            }
             var artworkRoomVM = new ArtworkRoomViewModel
             {
                 MuseumRoom = new SelectList( _unitOfWork.Artworks.GetAll().Select(m => m.MuseumRoom).Distinct()),
-                Artworks = artworks
+                Artworks = artworks,
+                LastResaturation = lastResaturation
             };
 
             return View(artworkRoomVM);
