@@ -79,7 +79,7 @@ namespace museum_management.Controllers{
                 return View(artworklendingViewModel);
             }
             
-            [HttpPost]
+            
             public IActionResult Accept(int artworkId, int museumId){
                 var lending = _unitOfWork.Lendings.GetById(artworkId,museumId);
                 lending.LendingState = LendingState.Lended;
@@ -88,7 +88,7 @@ namespace museum_management.Controllers{
                 return RedirectToAction("Index");
             }
 
-            [HttpPost]
+            
             public IActionResult Reject(int artworkId, int museumId){
                 var lending = _unitOfWork.Lendings.GetById(artworkId,museumId);
                 lending.LendingState = LendingState.Denied;
