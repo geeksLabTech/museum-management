@@ -12,7 +12,8 @@ namespace DataLayer.Models{
             using (var context = new MuseumManagementContext(
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MuseumManagementContext>>())) {
-
+                
+                
                 // Look for any artworks.
                 if (context.Artworks.Any()) {
                     context.RemoveRange(context.Artworks);
@@ -160,12 +161,12 @@ namespace DataLayer.Models{
                 System.Console.WriteLine( x[0].Artwork.Title);
             }
 
-            
         }
 
         public static async void CreateRolesAsync (IServiceProvider serviceProvider) {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            
             string[] roleNames = { UserRoles.Admin, UserRoles.CatalogManager, UserRoles.Director, UserRoles.Restaurator };
             IdentityResult roleResult;
             foreach (var roleName in roleNames)
@@ -179,10 +180,36 @@ namespace DataLayer.Models{
         }
 
         public static async void CreateAdminAsync (IServiceProvider serviceProvider) {
-            // Work in progress
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            var user = new IdentityUser() { UserName = "admin", Email = "admin@gmail.com", PasswordHash = ""};
+            if(userManager.Users.Any()) {
+                return;
+            }
+            var user = CreateUser();
+            IUserStore<IdentityUser> userStore = serviceProvider.GetRequiredService<IUserStore<IdentityUser>>();
+            var emailStore = (IUserEmailStore<IdentityUser>)userStore;
+            await userStore.SetUserNameAsync(user, "admin@gmail.com", CancellationToken.None);
+            await emailStore.SetEmailAsync(user, "admin@gmail.com", CancellationToken.None);
+            var result = await userManager.CreateAsync(user, "Leinad*2222");
+            user.EmailConfirmed=true;
+            if(!result.Succeeded) {
+                throw new Exception("problem creating admin user");
+
+            }
             await userManager.AddToRoleAsync(user, UserRoles.Admin);
+        }
+
+        private static IdentityUser CreateUser()
+        {
+            try
+            {
+                return Activator.CreateInstance<IdentityUser>();
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
+                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+            }
         }
     }
 }

@@ -16,7 +16,6 @@ namespace museum_management.Controllers{
             }
     
             public IActionResult Index() {
-                
                 var restaurations =  _unitOfWork.Restaurations.GetAll().ToList();
                 List<RestaurationViewModel> restaurationViewModels = new List<RestaurationViewModel>();
                 foreach(var restauration in restaurations){

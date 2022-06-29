@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 
 namespace WebApp1.Areas.Identity.Pages.Account
 {
+    [Authorize(Roles=UserRoles.Admin)]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -121,10 +122,10 @@ namespace WebApp1.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                // if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+                //     await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
              
-                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
+                // await _userManager.AddToRoleAsync(user, UserRoles.Admin);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

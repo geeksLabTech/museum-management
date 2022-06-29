@@ -99,6 +99,7 @@ using (var scope = app.Services.CreateScope())
 
     SeedData.Initialize(services);
     SeedData.CreateRolesAsync(services);
+    SeedData.CreateAdminAsync(services);
     // var monitorLoop = host.Services.GetRequiredService<MonitorLoop>();
     // monitorLoop.StartMonitorLoop();
    

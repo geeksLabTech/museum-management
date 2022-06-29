@@ -32,7 +32,7 @@ namespace museum_management.Controllers {
             }
             return RedirectToAction("Index");
         }
-
+        
         public async Task<IActionResult> Manage(string userId)
         {
             ViewBag.userId = userId;
