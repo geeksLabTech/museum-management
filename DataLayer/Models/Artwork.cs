@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
 namespace DataLayer.Models{
+    
     public class Artwork {
         public int Id {get; set;}
 
@@ -31,6 +32,7 @@ namespace DataLayer.Models{
         [Display(Name = "Museum room")]
         public string? MuseumRoom {get;set;}
 
+        
         
         public List<LendingToMuseum> LendingToMuseums {get; set;}
 

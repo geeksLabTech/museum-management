@@ -33,7 +33,8 @@ namespace DataLayer.Models{
                         EconomicValue = 100,
                         MuseumRoom = "West",
                         Id = 1,
-                        LendingToMuseums = new List<LendingToMuseum>()
+                        LendingToMuseums = new List<LendingToMuseum>(),
+                        Restaurations = new List<Restauration>()
                     },
                     new Artwork
                     {
@@ -44,7 +45,8 @@ namespace DataLayer.Models{
                         EconomicValue = 120,
                         MuseumRoom = "South",
                         Id = 2,
-                        LendingToMuseums = new List<LendingToMuseum>()
+                        LendingToMuseums = new List<LendingToMuseum>(),
+                        Restaurations = new List<Restauration>()
                     },
                     new Artwork
                     {
@@ -55,7 +57,8 @@ namespace DataLayer.Models{
                         EconomicValue = 130,
                         MuseumRoom = "East",
                         Id = 3,
-                        LendingToMuseums = new List<LendingToMuseum>()
+                        LendingToMuseums = new List<LendingToMuseum>(),
+                        Restaurations = new List<Restauration>()
                     }
                 };
                 context.Artworks.AddRange(
