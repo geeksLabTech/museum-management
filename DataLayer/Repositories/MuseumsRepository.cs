@@ -11,4 +11,9 @@ using Microsoft.EntityFrameworkCore;
         {
             
         }
+
+        public int GetMuseumIdByName(string name)
+        {
+            return this.Find(x => x.Name == name).FirstOrDefault().Id;
+        }
     }

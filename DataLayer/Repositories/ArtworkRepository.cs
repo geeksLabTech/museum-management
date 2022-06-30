@@ -15,6 +15,17 @@ namespace DataLayer.Repositories
             return this.Find(x => x.MuseumRoom == room);
         }
 
+        public IEnumerable<Artwork> GetArtworksByMuseumId(int museumId)
+        {
+            return this.Find(x => x.ActualMuseumId == museumId);
+        }
+
+        public IEnumerable<Artwork> GetAllArtworksOfOtherMuseums(){
+            return this.Find(x => x.ActualMuseumId != 3);
+        }
+
+
+
         public MuseumManagementContext MuseumManagementContext {
             get { return Context as MuseumManagementContext;}
         }

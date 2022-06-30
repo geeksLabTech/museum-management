@@ -119,11 +119,13 @@
 
 
                    
-                   
-                    @* System.Console.WriteLine(item.EndDate); *@
-                   <td>
-                       <a asp-action="Restaurations" asp-route-id="@Model.Artworks[i].Id">Restaurar</a>
-                    </td>
+                   @if(Model.Artworks[i].OriginMuseumId == 3)
+                   {
+                        <td>
+                            <a asp-action="Restaurations" asp-route-id="@Model.Artworks[i].Id">Restaurar</a>
+                        </td>
+                   }
+
 
                 }
             </tr>

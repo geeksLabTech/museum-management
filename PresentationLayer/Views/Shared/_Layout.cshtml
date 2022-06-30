@@ -24,6 +24,7 @@
                @if ( User.IsInRole("Director"))
                { 
                   <a class="nav-link text-dark" asp-area="" asp-controller="Lending" asp-action = "Index">Lending</a>
+                  <a class="nav-link text-dark" asp-area="" asp-controller="BorrowArtworks" asp-action = "Index">Borrow</a>
                }
                     
                @if ( User.IsInRole("Admin"))

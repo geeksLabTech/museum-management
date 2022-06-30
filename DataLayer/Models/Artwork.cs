@@ -32,14 +32,14 @@ namespace DataLayer.Models{
         [Display(Name = "Museum room")]
         public string? MuseumRoom {get;set;}
 
-        
+        public int OriginMuseumId {get; set;}
         
         public List<LendingToMuseum> LendingToMuseums {get; set;}
 
         public List<Restauration> Restaurations {get; set;}
 
         // [Display(nameof = "Actual Museum")]
-        // public string? ActualMuseum {get; set;}
+        public int ActualMuseumId {get; set;}
     }
 }
 

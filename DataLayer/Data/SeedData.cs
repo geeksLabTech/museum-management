@@ -34,7 +34,9 @@ namespace DataLayer.Models{
                         MuseumRoom = "West",
                         Id = 1,
                         LendingToMuseums = new List<LendingToMuseum>(),
-                        Restaurations = new List<Restauration>()
+                        Restaurations = new List<Restauration>(),
+                        OriginMuseumId = 3,
+                        ActualMuseumId = 3,
                     },
                     new Artwork
                     {
@@ -46,7 +48,9 @@ namespace DataLayer.Models{
                         MuseumRoom = "South",
                         Id = 2,
                         LendingToMuseums = new List<LendingToMuseum>(),
-                        Restaurations = new List<Restauration>()
+                        Restaurations = new List<Restauration>(),
+                        OriginMuseumId = 3,
+                        ActualMuseumId = 3,
                     },
                     new Artwork
                     {
@@ -58,16 +62,57 @@ namespace DataLayer.Models{
                         MuseumRoom = "East",
                         Id = 3,
                         LendingToMuseums = new List<LendingToMuseum>(),
-                        Restaurations = new List<Restauration>()
+                        Restaurations = new List<Restauration>(),
+                        OriginMuseumId = 3,
+                        ActualMuseumId = 3,
+                    },
+                    new Artwork
+                    {
+                        Title = "Gioconda",
+                        Period = "1510",
+                        Author = "Leonardo da Vinci",
+                        EntryDate= DateTime.Parse("2019-4-11"),
+                        EconomicValue = 140,
+                        MuseumRoom = "North",
+                        Id = 4,
+                        LendingToMuseums = new List<LendingToMuseum>(),
+                        Restaurations = new List<Restauration>(),
+                        OriginMuseumId = 2,
+                        ActualMuseumId = 2,
+                        
+                    },
+                    new Artwork {
+                        Title = "The Scream",
+                        Period = "1893",
+                        Author = "Edvard Munch",
+                        EntryDate= DateTime.Parse("2019-5-11"),
+                        EconomicValue = 150,
+                        MuseumRoom = "West",
+                        Id = 5,
+                        LendingToMuseums = new List<LendingToMuseum>(),
+                        Restaurations = new List<Restauration>(),
+                        OriginMuseumId = 1,
+                        ActualMuseumId = 1,
+                    
+                    },
+                    new Artwork {
+                        Title = "The Starry Night",
+                        Period = "1889",
+                        Author = "Vincent van Gogh",
+                        EntryDate= DateTime.Parse("2019-6-11"),
+                        EconomicValue = 160,
+                        MuseumRoom = "South",
+                        Id = 6,
+                        LendingToMuseums = new List<LendingToMuseum>(),
+                        Restaurations = new List<Restauration>(),
+                        OriginMuseumId = 2,
+                        ActualMuseumId = 2,
+                    
                     }
                 };
-                context.Artworks.AddRange(
-                    artworks[0],
-                    artworks[1],
-                    artworks[2]
-                    );
                 
-                context.Restaurations.AddRange(
+                
+                var restaurations = new Restauration[] {
                     new Restauration
                     {
                         Id = 1,
@@ -96,7 +141,8 @@ namespace DataLayer.Models{
                         StartDate = DateTime.Parse("2019-3-11"),
                         EndDate = DateTime.Parse("2019-4-11")
                     }
-                );
+                };
+                
                 var museums = new Museum[] {
                     new Museum{
                         Id = 1,
@@ -111,13 +157,10 @@ namespace DataLayer.Models{
                         Id = 3,
                         Name = "My Museum"
                     }
+                    
                 };
-                context.Museums.AddRange(
-                    museums[0],
-                    museums[1],
-                    museums[2]
-                );
-                context.SaveChanges();
+                
+                
                 var lendingToMuseums = new LendingToMuseum[] {
                     new LendingToMuseum
                     {
@@ -145,23 +188,49 @@ namespace DataLayer.Models{
                         LendingState = LendingState.Requested,
                         Artwork = artworks[2],
                         Museum = museums[1],
-                        MuseumId = 3
+                        MuseumId = 1
                     }
                 };
+
+                artworks[0].LendingToMuseums.Add(lendingToMuseums[0]);
+                artworks[1].LendingToMuseums.Add(lendingToMuseums[1]);
+                artworks[2].LendingToMuseums.Add(lendingToMuseums[2]);
+
+                context.Artworks.AddRange(
+                    artworks[0],
+                    artworks[1],
+                    artworks[2],
+                    artworks[3],
+                    artworks[4],
+                    artworks[5]
+                    );
+                    
+                context.Restaurations.AddRange(
+                    restaurations[0],
+                    restaurations[1],
+                    restaurations[2]
+                );
+
                 context.LendingToMuseums.AddRange(
                     lendingToMuseums[0],
                     lendingToMuseums[1],
                     lendingToMuseums[2]
                 );
-                var count = 0;
-                foreach (var art in context.Artworks){
-                    art.LendingToMuseums.Add(lendingToMuseums[count]);
-                    count++;
-                }
+                
+                context.Museums.AddRange(
+                    museums[0],
+                    museums[1],
+                    museums[2]
+                );
+                // var count = 0;
+                // foreach (var art in context.Artworks){
+                //     art.LendingToMuseums.Add(lendingToMuseums[count]);
+                //     count++;
+                // }
                 
                 context.SaveChanges();
-                var x = context.LendingToMuseums.ToList();
-                System.Console.WriteLine( x[0].Artwork.Title);
+                // var x = context.LendingToMuseums.ToList();
+                // System.Console.WriteLine( x[0].Artwork.Title);
             }
 
         }

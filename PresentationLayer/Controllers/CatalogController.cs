@@ -73,14 +73,20 @@ namespace museum_management.Controllers{
         
         public  IActionResult Index(string artworkroom)
         {
-            var artworks = _unitOfWork.Artworks.GetAll().ToList();
+            var artworks = _unitOfWork.Artworks.GetArtworksByMuseumId(3).ToList();
             
             if (!string.IsNullOrEmpty(artworkroom))
             {
-                artworks = _unitOfWork.Artworks.GetArtworksByRoom(artworkroom).ToList();
+                artworks = artworks.Where(x=> x.MuseumRoom == artworkroom).ToList();
             }
             var lastResaturation = new List<DateTime>();
             var restaurations = _unitOfWork.Restaurations.GetAll().ToList();
+            // List<Restauration> restaurations = new List<Restauration>();
+            // foreach(var artwork in artworks){
+            //     foreach(var restauration in artwork.Restaurations){
+            //         restaurations.Add(restauration);
+            //     }
+            // }
             
             foreach(var art in artworks)
             {
@@ -100,7 +106,7 @@ namespace museum_management.Controllers{
             }
             var artworkRoomVM = new ArtworkRoomViewModel
             {
-                MuseumRoom = new SelectList( _unitOfWork.Artworks.GetAll().Select(m => m.MuseumRoom).Distinct()),
+                MuseumRoom = new SelectList( _unitOfWork.Artworks.GetArtworksByMuseumId(3).Select(m => m.MuseumRoom).Distinct()),
                 Artworks = artworks,
                 LastResaturation = lastResaturation
             };
