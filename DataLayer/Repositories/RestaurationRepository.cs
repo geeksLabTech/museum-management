@@ -7,6 +7,9 @@ public class RestaurationRepository : Repository<Restauration>, IRestaurationRep
     public RestaurationRepository(DbContext context) : base(context)
     {
     }
+
+    public Restauration GetById(int id, int artworkid) => Context.Set<Restauration>().Find(id,artworkid);
+    
 }
 
 

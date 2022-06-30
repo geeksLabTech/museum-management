@@ -21,20 +21,20 @@ namespace museum_management.Controllers{
             _unitOfWork = unitOfWork;
         }
     
-        public IActionResult Restaurations(int id) {
+        // public IActionResult Restaurations(int id , int artworkid) {
           
 
-            var restaurations = _unitOfWork.Restaurations.GetById(id);
-            // Where(r => r.ArtworkId == id).ToListAsync();
+        //     var restaurations = _unitOfWork.Restaurations.GetById(id, artworkid);
+        //     // Where(r => r.ArtworkId == id).ToListAsync();
 
-            if (restaurations == null) {
-                return NotFound();
-            }
+        //     if (restaurations == null) {
+        //         return NotFound();
+        //     }
             
-            return View(restaurations);
+        //     return View(restaurations);
             
 
-        }
+        // }
 
        
 
@@ -96,7 +96,7 @@ namespace museum_management.Controllers{
                 }
                 else
                 lastResaturation.Add(restaurationActual[restaurationActual.Count-1].EndDate);
-                
+
             }
             var artworkRoomVM = new ArtworkRoomViewModel
             {

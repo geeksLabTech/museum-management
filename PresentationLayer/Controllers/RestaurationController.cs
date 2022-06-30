@@ -5,6 +5,8 @@ using PresentationLayer.ViewModels;
 using DataLayer.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using DataLayer.UnitOfWork;
+using DataLayer.Models;
+
 namespace museum_management.Controllers{
     [Authorize (Roles = UserRoles.Restaurator)]
     public class RestaurationController: Controller{
@@ -29,19 +31,23 @@ namespace museum_management.Controllers{
                 return View(restaurationViewModels);
             }
             
-            public IActionResult Restaurations(int id) {
-                
-    
-                var restaurations = _unitOfWork.Restaurations.GetById(id);
-    
-                if (restaurations == null) {
-                    return NotFound();
-                }
-                else
-                restaurations.StartDate = DateTime.Now;
-                return View(restaurations);
+            
+            public IActionResult Submit( int artworkid,[Bind("Type , EndDate" )] CreatterestaurationViewModel creatterestaurationViewModel) {
+
+                Restauration restauration = new Restauration
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = creatterestaurationViewModel.EndDate,
+                    ArtworkId = artworkid,
+                    Artwork = _unitOfWork.Artworks.GetById(artworkid),
+                };
+                return View("Index","Restauration");
     
             }
             
+            public IActionResult Restauration()
+            {
+                return View();
+            }
     }
 }

@@ -122,7 +122,7 @@
                    
                     @* System.Console.WriteLine(item.EndDate); *@
                    <td>
-                       <a asp-action="Restaurations" asp-route-id="@Model.Artworks[i].Id">Restaurar</a>
+                       <a asp-controller = "Restauration" asp-action="Restauration"  asp-route-id="@Model.Artworks[i].Id">Restaurar</a>
                     </td>
 
                 }
