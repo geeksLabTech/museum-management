@@ -47,6 +47,10 @@ namespace museum_management.Controllers {
         public IActionResult Borrow(int id) {
             var artwork = _unitOfWork.Artworks.GetById(id);
             artwork.ActualMuseumId = 3;
+            System.Console.WriteLine("mira esto");
+           System.Console.WriteLine( artwork.Restaurations == null);
+
+           artwork.Restaurations = new List<Restauration>();
             _unitOfWork.Complete();
             return RedirectToAction("Index");
         }

@@ -67,66 +67,71 @@
         @for (int i = 0; i < Model.Artworks.Count; i++)    
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Artworks[i].Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Artworks[i].Author)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Artworks[i].CreationDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Artworks[i].EconomicValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Artworks[i].EntryDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Artworks[i].Period)
-                </td>
-                <td>
-                    @* @Html.DisplayFor(modelItem => item.ActualMuseum) *@
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Artworks[i].MuseumRoom)
-                </td>
+                @if(DateTime.Now > Model.LastResaturation[i].EndDate)
+                {
+                    
                 
-                 @if(User.IsInRole(UserRoles.Restaurator)) 
-                {   
-                     <td>
-                        @Html.DisplayFor(modelItem => Model.LastResaturation[i].EndDate)
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Artworks[i].Title)
                     </td>
-
-
-                     @if (Model.LastResaturation[i].EndDate.Day == DateTime.Now.Day
-                         && Model.LastResaturation[i].EndDate.Month == DateTime.Now.Month 
-                         && Model.LastResaturation[i].EndDate.Year == DateTime.Now.Year)
-                         {
-                            
-                            <td>
-                                    @Html.DisplayName("True")
-                            </td>
-                         }
-                    else
-                        {
-                            
-                            <td>
-
-                                @Html.DisplayName("False")
-                            </td>
-                        }
-
-
-                   
-                   @if(Model.Artworks[i].OriginMuseumId == 3 )
-                      
-                   {
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Artworks[i].Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Artworks[i].CreationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Artworks[i].EconomicValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Artworks[i].EntryDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Artworks[i].Period)
+                    </td>
+                    <td>
+                        @* @Html.DisplayFor(modelItem => item.ActualMuseum) *@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Artworks[i].MuseumRoom)
+                    </td>
+                    
+                    @if(User.IsInRole(UserRoles.Restaurator)) 
+                    {   
                         <td>
-                            <a asp-controller="Restauration" asp-action="Add" asp-route-artworkId="@Model.Artworks[i].Id">Restaurar</a>
+                            @Html.DisplayFor(modelItem => Model.LastResaturation[i].EndDate)
                         </td>
-                   }
 
+
+                        @if (Model.LastResaturation[i].EndDate.Day == DateTime.Now.Day
+                            && Model.LastResaturation[i].EndDate.Month == DateTime.Now.Month 
+                            && Model.LastResaturation[i].EndDate.Year == DateTime.Now.Year)
+                            {
+                                
+                                <td>
+                                        @Html.DisplayName("True")
+                                </td>
+                            }
+                        else
+                            {
+                                
+                                <td>
+
+                                    @Html.DisplayName("False")
+                                </td>
+                            }
+
+
+                    
+                    @if(Model.Artworks[i].OriginMuseumId == 3 )
+                        
+                    {
+                            <td>
+                                <a asp-controller="Restauration" asp-action="Add" asp-route-artworkId="@Model.Artworks[i].Id">Restaurar</a>
+                            </td>
+                    }
+
+                }
 
                 }
             </tr>
