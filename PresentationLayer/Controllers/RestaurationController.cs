@@ -6,6 +6,7 @@ using DataLayer.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using DataLayer.UnitOfWork;
 using DataLayer.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace museum_management.Controllers{
     [Authorize (Roles = UserRoles.Restaurator)]
@@ -30,24 +31,53 @@ namespace museum_management.Controllers{
 
                 return View(restaurationViewModels);
             }
-            
-            
-            public IActionResult Submit( int artworkid,[Bind("Type , EndDate" )] CreatterestaurationViewModel creatterestaurationViewModel) {
 
-                Restauration restauration = new Restauration
-                {
-                    StartDate = DateTime.Now,
-                    EndDate = creatterestaurationViewModel.EndDate,
-                    ArtworkId = artworkid,
-                    Artwork = _unitOfWork.Artworks.GetById(artworkid),
-                };
-                return View("Index","Restauration");
-    
+
+            public IActionResult Add(int artworkId){
+                CreateRestaurationViewModel createRestaurationViewModel = new CreateRestaurationViewModel();
+                createRestaurationViewModel.ArtworkId = artworkId;
+                createRestaurationViewModel.TypeRestauration="";
+                
+                return View(createRestaurationViewModel);
             }
             
-            public IActionResult Restauration()
-            {
-                return View();
+            [HttpPost, ActionName("Add")]
+            public IActionResult AddARestauration(int artworkId, [Bind("TypeRestauration, EndDate")] CreateRestaurationViewModel createRestaurationViewModel){
+                if(ModelState.IsValid){
+                    Restauration restauration = new Restauration();
+                    restauration.ArtworkId = artworkId;
+                    System.Console.WriteLine(artworkId);
+                    System.Console.WriteLine("MMMM");
+
+                    restauration.StartDate = DateTime.Now.Date;
+                    restauration.EndDate = createRestaurationViewModel.EndDate;
+                    restauration.RestaurationType = createRestaurationViewModel.TypeRestauration;
+                    restauration.Artwork = _unitOfWork.Artworks.GetById(artworkId);
+                    _unitOfWork.Restaurations.Add(restauration);
+                    _unitOfWork.Complete();
+                    return RedirectToAction("Index");
+                }
+                var errors = ModelState.Select(x => x.Value.Errors)
+                            .Where(y=>y.Count>0)
+                            .ToList();
+
+                foreach(var error in errors){
+                    foreach(var e in error){
+                        System.Console.WriteLine(e.ErrorMessage);
+                    }
+                }
+                return RedirectToAction("Add", artworkId);
             }
+            
+            // public IActionResult Restauration()
+            // {
+            //     CreateRestaurationViewModel createRestaurationViewModel = new CreateRestaurationViewModel();
+            //     var restaurationTypes = new List<string>();
+            //     restaurationTypes.Add(RestaurationType.Complete.ToString());
+            //     restaurationTypes.Add(RestaurationType.Minimal.ToString());
+            //     restaurationTypes.Add(RestaurationType.Partial.ToString());
+            //     createRestaurationViewModel.TypeRestauration = new SelectList(restaurationTypes);
+            //     return View(createRestaurationViewModel);
+            // }
     }
 }

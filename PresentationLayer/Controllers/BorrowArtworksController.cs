@@ -24,9 +24,9 @@ namespace museum_management.Controllers {
                 int museumId = _unitOfWork.Museums.GetMuseumIdByName(museumName);
                 artworks = _unitOfWork.Artworks.GetArtworksByMuseumId(museumId);
             }
-            var lastResaturation = new List<DateTime>();
+            var lastResaturation = new List<Restauration>();
             var restaurations = _unitOfWork.Restaurations.GetAll().ToList();
-            System.Console.WriteLine("imprimir obras");
+    
             System.Console.WriteLine( artworks.First());
             foreach(var x in artworks){
                 System.Console.WriteLine("titulo");

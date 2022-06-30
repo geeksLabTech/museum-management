@@ -95,13 +95,13 @@
                  @if(User.IsInRole(UserRoles.Restaurator)) 
                 {   
                      <td>
-                        @Html.DisplayFor(modelItem => Model.LastResaturation[i].Date)
+                        @Html.DisplayFor(modelItem => Model.LastResaturation[i].EndDate)
                     </td>
 
 
-                     @if (Model.LastResaturation[i].Day == DateTime.Now.Day
-                         && Model.LastResaturation[i].Month == DateTime.Now.Month 
-                         && Model.LastResaturation[i].Year == DateTime.Now.Year)
+                     @if (Model.LastResaturation[i].EndDate.Day == DateTime.Now.Day
+                         && Model.LastResaturation[i].EndDate.Month == DateTime.Now.Month 
+                         && Model.LastResaturation[i].EndDate.Year == DateTime.Now.Year)
                          {
                             
                             <td>
@@ -119,10 +119,12 @@
 
 
                    
-                   @if(Model.Artworks[i].OriginMuseumId == 3)
+                   @if(Model.Artworks[i].OriginMuseumId == 3 && 
+                     DateTime.Now > Model.LastResaturation[i].EndDate)
+                      
                    {
                         <td>
-                            <a asp-action="Restaurations" asp-route-id="@Model.Artworks[i].Id">Restaurar</a>
+                            <a asp-controller="Restauration" asp-action="Add" asp-route-artworkId="@Model.Artworks[i].Id">Restaurar</a>
                         </td>
                    }
 

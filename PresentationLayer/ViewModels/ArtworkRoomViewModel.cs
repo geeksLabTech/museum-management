@@ -9,6 +9,6 @@ namespace PresentationLayer.ViewModels
         public List<Artwork>? Artworks {get; set;}
         public SelectList? MuseumRoom { get; set; }
         public string? Artworkroom { get; set; }
-        public List<DateTime> LastResaturation{get;set;} 
+        public List<Restauration> LastResaturation{get;set;} 
     }
 }

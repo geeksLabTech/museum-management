@@ -14,14 +14,14 @@ namespace DataLayer.Models{
         public int ArtworkId {get; set;}
         public Artwork Artwork{get; set;}
 
-        public RestaurationType RestaurationType {get; set;}
+        public string RestaurationType {get; set;}
 
     }
 
-    public enum RestaurationType {
-        Complete,
-        Partial,
-        Minimal
+    public static class RestaurationType {
+        public const string Complete = "Complete";
+        public const string Partial = "Partial";
+        public const string Minimal = "Minimal";
     }
 }
 

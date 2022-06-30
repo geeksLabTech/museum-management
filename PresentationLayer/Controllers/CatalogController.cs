@@ -79,14 +79,9 @@ namespace museum_management.Controllers{
             {
                 artworks = artworks.Where(x=> x.MuseumRoom == artworkroom).ToList();
             }
-            var lastResaturation = new List<DateTime>();
+            var lastResaturation = new List<Restauration>();
             var restaurations = _unitOfWork.Restaurations.GetAll().ToList();
-            // List<Restauration> restaurations = new List<Restauration>();
-            // foreach(var artwork in artworks){
-            //     foreach(var restauration in artwork.Restaurations){
-            //         restaurations.Add(restauration);
-            //     }
-            // }
+            
             
             foreach(var art in artworks)
             {
@@ -98,10 +93,14 @@ namespace museum_management.Controllers{
 
                 if(restaurationActual.Count == 0) 
                 {
-                    lastResaturation.Add(art.EntryDate);
+                    lastResaturation.Add(new Restauration {
+                        ArtworkId = art.Id,
+                        Artwork = art,
+                        StartDate = DateTime.Now
+                    });
                 }
                 else
-                lastResaturation.Add(restaurationActual[restaurationActual.Count-1].EndDate);
+                lastResaturation.Add(restaurationActual[restaurationActual.Count-1]);
 
             }
             var artworkRoomVM = new ArtworkRoomViewModel

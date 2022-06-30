@@ -1,9 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace PresentationLayer.ViewModels {
-    public class CreatterestaurationViewModel
+    public class CreateRestaurationViewModel
     {
-        public string RestaurationID { get; set; }
-        public List<string> TypeRestauration { get; set; }
+
+        public int ArtworkId { get; set; }
+        public string TypeRestauration { get; set; }
+        
+        [DataType(DataType.Date)]
         public DateTime EndDate {get; set;}
-        public bool Selected { get; set; }
+
     }
 }
