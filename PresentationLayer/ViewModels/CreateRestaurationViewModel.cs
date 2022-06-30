@@ -7,9 +7,6 @@ namespace PresentationLayer.ViewModels {
 
         public int ArtworkId { get; set; }
         public string TypeRestauration { get; set; }
-        
-        [DataType(DataType.Date)]
-        public DateTime EndDate {get; set;}
 
     }
 }

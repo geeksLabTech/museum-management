@@ -42,7 +42,7 @@ namespace museum_management.Controllers{
             }
             
             [HttpPost, ActionName("Add")]
-            public IActionResult AddARestauration(int artworkId, [Bind("TypeRestauration, EndDate")] CreateRestaurationViewModel createRestaurationViewModel){
+            public IActionResult AddARestauration(int artworkId, [Bind("TypeRestauration")] CreateRestaurationViewModel createRestaurationViewModel){
                 if(ModelState.IsValid){
                     Restauration restauration = new Restauration();
                     restauration.ArtworkId = artworkId;
@@ -50,7 +50,8 @@ namespace museum_management.Controllers{
                     System.Console.WriteLine("MMMM");
 
                     restauration.StartDate = DateTime.Now.Date;
-                    restauration.EndDate = createRestaurationViewModel.EndDate;
+                    System.TimeSpan duration = new System.TimeSpan(90, 0, 0, 0); 
+                    restauration.EndDate = (DateTime.Now).Add(duration);
                     restauration.RestaurationType = createRestaurationViewModel.TypeRestauration;
                     restauration.Artwork = _unitOfWork.Artworks.GetById(artworkId);
                     _unitOfWork.Restaurations.Add(restauration);

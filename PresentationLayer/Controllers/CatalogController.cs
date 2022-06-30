@@ -103,6 +103,7 @@ namespace museum_management.Controllers{
                 lastResaturation.Add(restaurationActual[restaurationActual.Count-1]);
 
             }
+            artworks = artworks.Where(x=>DateTime.Now > x.Restaurations[x.Restaurations.Count-1].EndDate).ToList();
             var artworkRoomVM = new ArtworkRoomViewModel
             {
                 MuseumRoom = new SelectList( _unitOfWork.Artworks.GetArtworksByMuseumId(3).Select(m => m.MuseumRoom).Distinct()),
