@@ -1,4 +1,6 @@
+@using DataLayer.Models.Auth
 @model PresentationLayer.ViewModels.ArtworkRoomViewModel
+
 
 @{
     ViewData["Title"] = "Artworks List";
@@ -44,40 +46,88 @@
             <th> 
                 @Html.DisplayNameFor(model => model.Artworks[0].MuseumRoom)
             </th>
+            @* <th>
+                @Html.DisplayNameFor(model => model.LastResaturation)
+            </th> *@
+            @if(User.IsInRole(UserRoles.Restaurator)) 
+            {
+                System.Console.WriteLine("Entreee");
+                <th>
+                    @Html.DisplayName("Last Restauration")
+                </th>
+
+                 <th>
+                    @Html.DisplayName("Necesary Restauration")
+                </th>
+            }
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Artworks)
+        @for (int i = 0; i < Model.Artworks.Count; i++)    
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Author)
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].Author)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].CreationDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EconomicValue)
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].EconomicValue)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EntryDate)
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].EntryDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Period)
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].Period)
                 </td>
                 <td>
                     @* @Html.DisplayFor(modelItem => item.ActualMuseum) *@
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MuseumRoom)
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].MuseumRoom)
                 </td>
-                <td>
-                    @* <a asp-action="Restaurations" asp-route-id="@item.Artwork.Id">Restauraciones</a> *@
-                </td>
+                
+                 @if(User.IsInRole(UserRoles.Restaurator)) 
+                {   
+                     <td>
+                        @Html.DisplayFor(modelItem => Model.LastResaturation[i].Date)
+                    </td>
+
+
+                     @if (Model.LastResaturation[i].Day == DateTime.Now.Day
+                         && Model.LastResaturation[i].Month == DateTime.Now.Month 
+                         && Model.LastResaturation[i].Year == DateTime.Now.Year)
+                         {
+                            
+                            <td>
+                                    @Html.DisplayName("True")
+                            </td>
+                         }
+                    else
+                        {
+                            
+                            <td>
+
+                                @Html.DisplayName("False")
+                            </td>
+                        }
+
+
+                   
+                   @if(Model.Artworks[i].OriginMuseumId == 3)
+                   {
+                        <td>
+                            <a asp-action="Restaurations" asp-route-id="@Model.Artworks[i].Id">Restaurar</a>
+                        </td>
+                   }
+
+
+                }
             </tr>
         }
     </tbody>

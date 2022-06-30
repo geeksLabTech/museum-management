@@ -5,71 +5,44 @@ using System.Text.Encodings.Web;
 using DataLayer.Models;
 using PresentationLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using DataLayer.Models.Auth;
+using DataLayer;
+using DataLayer.UnitOfWork;
 
 
 namespace museum_management.Controllers{
+    [AllowAnonymous]
     public class CatalogController : Controller {
-        private readonly MuseumManagementContext _context;
-
-        public CatalogController(MuseumManagementContext context) {
-            _context = context;
-        }
         
-        // public async Task<IActionResult> Index() {
-            // var artworks = await _context.Artworks.ToListAsync();
-            // var restaurations = await _context.Restaurations.ToListAsync();
-            // var lendingToMuseums = await _context.LendingToMuseums.ToListAsync();
-// 
-            // var artworkViewModelList = new List<ArtworkViewModel>();
-// 
-            // foreach (var artwork in artworks) {
-                // var artworkViewModel = new ArtworkViewModel();
-                // artworkViewModel.Artwork = artwork;
-                // artworkViewModel.Restaurations = new List<Restauration>();
-                // artworkViewModel.ActualMuseum = "My Museum";
-                // foreach (var restauration in restaurations) {
-                    // if (restauration.ArtworkId == artwork.Id) {
-                        // artworkViewModel.Restaurations.Add(restauration);
-                    // }
-                // }
-                // /*
-                // foreach (var lendingToMuseum in lendingToMuseums) {
-                    // if (lendingToMuseum.ArtworkId == artwork.Id && !lendingToMuseum.IsFinished) {
-                        // artworkViewModel.ActualMuseum = lendingToMuseum.Museum.Name;
-                    // }
-                // }
-                // */
-                // artworkViewModelList.Add(artworkViewModel);
-            // } 
-// 
-            // return View(artworkViewModelList);
+        private readonly IUnitOfWork _unitOfWork;
+
+        public CatalogController(IUnitOfWork unitOfWork) {
+            _unitOfWork = unitOfWork;
+        }
+    
+        // public IActionResult Restaurations(int id , int artworkid) {
+          
+
+        //     var restaurations = _unitOfWork.Restaurations.GetById(id, artworkid);
+        //     // Where(r => r.ArtworkId == id).ToListAsync();
+
+        //     if (restaurations == null) {
+        //         return NotFound();
+        //     }
+            
+        //     return View(restaurations);
+            
+
         // }
 
-        public async Task<IActionResult> Restaurations(int? id) {
-            if (id == null) {
-                return NotFound();
-            }
+       
 
-            var restaurations = await _context.Restaurations.Where(r => r.ArtworkId == id).ToListAsync();
+        public IActionResult Edit(int id){
+        
 
-            if (restaurations == null) {
-                return NotFound();
-            }
-
-            return View(restaurations);
-
-        }
-
-        //public IActionResult Create(){
-            
-        //}
-
-        public async Task<IActionResult> Edit(int? id){
-            if (id == null) {
-                return NotFound();
-            }
-
-            var artwork = await _context.Artworks.FirstOrDefaultAsync(m => m.Id == id);
+            var artwork = _unitOfWork.Artworks.GetById(id);
+            // FirstOrDefaultAsync(m => m.Id == id);
 
             if (artwork == null) {
                 return NotFound();
@@ -78,13 +51,10 @@ namespace museum_management.Controllers{
             return View(artwork);
         }
 
-        public async Task<IActionResult> Delete(int? id){
-            if (id == null) {
-                return NotFound();
-            }
-
-            var artwork = await _context.Artworks
-                .FirstOrDefaultAsync(m => m.Id == id);
+        public IActionResult Delete(int id){
+        
+            var artwork = _unitOfWork.Artworks.GetById(id);
+                // .FirstOrDefaultAsync(m => m.Id == id);
             if (artwork == null) {
                 return NotFound();
             }
@@ -94,33 +64,51 @@ namespace museum_management.Controllers{
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id){
-            var artwork = await _context.Artworks.FindAsync(id);
-            _context.Artworks.Remove(artwork);
-            await _context.SaveChangesAsync();
+        public IActionResult DeleteConfirmed(int id){
+            var artwork = _unitOfWork.Artworks.GetById(id);
+            _unitOfWork.Artworks.Remove(artwork);
+            _unitOfWork.Complete();
             return RedirectToAction(nameof(Index));
         }
         
-        
-        public async Task<IActionResult> Index(string artworkroom)  
+        public  IActionResult Index(string artworkroom)
         {
-  
-            IQueryable<string> genreQuery = from m in _context.Artworks
-                                            orderby m.MuseumRoom
-                                            select m.MuseumRoom;
-            var artwork = from m in _context.Artworks
-                         select m;
-
-
+            var artworks = _unitOfWork.Artworks.GetArtworksByMuseumId(3).ToList();
+            
             if (!string.IsNullOrEmpty(artworkroom))
             {
-                artwork = artwork.Where(x => x.MuseumRoom == artworkroom);
+                artworks = artworks.Where(x=> x.MuseumRoom == artworkroom).ToList();
             }
+            var lastResaturation = new List<DateTime>();
+            var restaurations = _unitOfWork.Restaurations.GetAll().ToList();
+            // List<Restauration> restaurations = new List<Restauration>();
+            // foreach(var artwork in artworks){
+            //     foreach(var restauration in artwork.Restaurations){
+            //         restaurations.Add(restauration);
+            //     }
+            // }
+            
+            foreach(var art in artworks)
+            {
+                var restaurationActual = new List<Restauration>();
+                foreach(var rest in restaurations)
+                {
+                    if (art.Id == rest.ArtworkId) restaurationActual.Add(rest);
+                }
 
+                if(restaurationActual.Count == 0) 
+                {
+                    lastResaturation.Add(art.EntryDate);
+                }
+                else
+                lastResaturation.Add(restaurationActual[restaurationActual.Count-1].EndDate);
+
+            }
             var artworkRoomVM = new ArtworkRoomViewModel
             {
-                MuseumRoom = new SelectList(await genreQuery.Distinct().ToListAsync()),
-                Artworks = await artwork.ToListAsync()
+                MuseumRoom = new SelectList( _unitOfWork.Artworks.GetArtworksByMuseumId(3).Select(m => m.MuseumRoom).Distinct()),
+                Artworks = artworks,
+                LastResaturation = lastResaturation
             };
 
             return View(artworkRoomVM);

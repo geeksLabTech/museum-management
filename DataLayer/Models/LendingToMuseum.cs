@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Models{
     public class LendingToMuseum{
+        // public int Id { get; set; }
+
         public int ArtworkId {get; set;}
 
         public int MuseumId {get; set;}
@@ -19,16 +21,16 @@ namespace DataLayer.Models{
         public DateTime StartDate {get; set;}
         */
 
-        public LendingState LendingState {get; set;}
+        public String LendingState {get; set;}
 
         public int PeriodInDays {get; set;}
     }
 }
 
-public enum LendingState {
-    Requested,
-    Lended,
-    Denied,
-    Returned,
+public static class LendingState {
+    public const string Requested = "Requested";
+    public const string Lended = "Lended";
+    public const string Denied = "Denied";
+    public const string Returned = "Returned";
     
 }

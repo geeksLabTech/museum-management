@@ -1,0 +1,22 @@
+@model PresentationLayer.ViewModels.ArtworklendingViewModel
+@* @using PresentationLayer.Controllers *@
+@{
+    ViewData["Title"] = "Datails Artwork";
+}
+
+
+<h2>
+    @Html.DisplayFor(model=> model.ArtworkTitle)
+</h2>
+<h2>
+    @Html.DisplayFor(model=> model.Author)
+
+</h2>
+<h2>
+    @Html.DisplayFor(model => model.MuseumName)
+</h2>
+
+<a class="btn btn-primary" asp-action="Accept" asp-route-artworkId="@Model.ArtworkId" asp-route-museumId="@Model.MuseumId" >Accepted</a>
+<a class="btn btn-primary" asp-action="Reject" asp-route-artworkId="@Model.ArtworkId" asp-route-museumId="@Model.MuseumId">Rejected</a>
+
+

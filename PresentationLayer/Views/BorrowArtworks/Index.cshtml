@@ -1,0 +1,83 @@
+@using DataLayer.Models.Auth
+@model PresentationLayer.ViewModels.ArtworkRoomViewModel
+
+
+@{
+    ViewData["Title"] = "Borrow Artworks";
+}
+
+<h2>Borrow Catalog</h2>
+
+<form asp-controller= "Catalog" asp-action="Index" method="get">
+    <p>
+        <select asp-for="Artworkroom" asp-items="Model.MuseumRoom">
+            <option value="">All</option>
+        </select>
+       
+        <input type="submit" value="Filter" /> 
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Artworks[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artworks[0].Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artworks[0].CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artworks[0].EconomicValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artworks[0].EntryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artworks[0].Period)
+            </th>
+            @* <th> 
+                @Html.DisplayNameFor(model => model.Artworks[0].MuseumRoom)
+            </th> *@
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Artworks.Count; i++)    
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].CreationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].EconomicValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].EntryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Artworks[i].Period)
+                </td>
+                @* <td>
+                    @Html.DisplayFor(modelItem => item.ActualMuseum) 
+                </td> *@
+                
+                <td>
+                    <a asp-action="Borrow" asp-route-id="@Model.Artworks[i].Id">Borrow</a>
+                </td>
+
+                
+            </tr>
+        }
+    </tbody>
+</table>

@@ -17,30 +17,65 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="LogIn" asp-action="Index">Log In</a>
-                        </li>
-                        @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li> *@
+                @if ( User.IsInRole("Restaurador"))
+                {
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Restauration" asp-action = "Index">Restauration</a>
+                }
+               @if ( User.IsInRole("Director"))
+               { 
+                  <a class="nav-link text-dark" asp-area="" asp-controller="Lending" asp-action = "Index">Lending</a>
+                  <a class="nav-link text-dark" asp-area="" asp-controller="BorrowArtworks" asp-action = "Index">Borrow</a>
+               }
+                    
+               @if ( User.IsInRole("Admin"))
+               { 
+                  
+                  <a class ="nav-link text-dark" asp-area="" asp-controller="User" asp-action = "Index">User Management</a>
+               }
+               @if(User.IsInRole("Encargado del Catalogo")) 
+                { 
+                   <a class ="nav-link text-dark" asp-area="" asp-controller="AddArtwork" asp-action = "Index">Add Artwork</a>
+                } 
+                    
+                <div class="navbar-collapse d-flex flex-row-reverse">
+                    <ul class="navbar-nav">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            
+                            <a class="nav-link text-dark pull-right  active" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                     @User.Identity.Name 
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+                                </div>
+                            </li>
+                        }
+                        else if (!@Context.Request.Path.Value.Contains("Authentication")){
+                            <li class="nav-item">
+                                <a class="nav-link text-dark pull-right  active" asp-area="Identity" asp-page="/Account/Login" >Log In</a>
+                            </li>
+                        }
+                        
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container body-content">
+        @RenderBody()
     </div>
 
-    <footer class="border-top footer text-muted">
+    @* <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - Catalog Museum - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

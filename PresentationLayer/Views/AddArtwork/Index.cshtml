@@ -1,0 +1,77 @@
+@model PresentationLayer.ViewModels.AddArtworkViewModel
+
+
+@{
+    ViewData["Title"] = "Add Artwork";
+}
+
+<h1>Add Artwork to Catalog</h1>
+
+<h4>Artwork</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <input type="hidden" asp-for="Id" /> *@
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EconomicValue" class="control-label"></label>
+                <input asp-for="EconomicValue" class="form-control" />
+                <span asp-validation-for="EconomicValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Period" class="control-label"></label>
+                <input asp-for="Period" class="form-control" />
+                <span asp-validation-for="Period" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreationDate" class="control-label"></label>
+                <input asp-for="CreationDate" class="form-control" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MuseumRoom" class="control-label"></label>
+                <input asp-for="MuseumRoom" class="form-control" />
+                <span asp-validation-for="MuseumRoom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+@* <form  asp-action="Index" asp-controller="AddArtwork" >
+
+
+    
+   <label for="Title">Title</label>
+   <input class='form-control' id='Title' name="Title"  /> <br />
+   <label for="Author">Author</label>
+   <input class='form-control' id='Author' name="Author"  /> <br />
+   <label for="EconomicValue">Economic Value</label>
+   <input  class='form-control' id="EconomicValue" name='EconomicValue' a /><br />
+   <label for="Period">Period</label>
+   <input  class='form-control' id="Period" name='Period'  /><br />
+   <label for="CreationDate">Creation Date</label>
+   <input  class='form-control' id="CreationDate" name='CreationDate'  /><br />
+   @* <label for="EntryDate">Entry Date</label>
+   <input  class='form-control' id="EntryDate" name='EntryDate'  /><br /> 
+   <label for="Museum">Museum Room</label>
+   <input  class='form-control' id="MuseumRoom" name='MuseumRoom'  /><br />
+    <a class="btn btn-primary" asp-controller = "Catalog" asp-action="Index" >Add</a>
+
+</form> *@
