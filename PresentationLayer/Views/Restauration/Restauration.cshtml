@@ -1,0 +1,17 @@
+@model PresentationLayer.ViewModels.CreatterestaurationViewModel
+
+@{
+    ViewData["Title"] = "Tipo De Restauracion";
+}
+
+<form method="post" asp-controller="Restauration" asp-action="Restaurations">
+      
+        @foreach (var rest in Model.TypeRestauration)
+        {
+            <input id="@rest" type="radio" name="Restauration" value="@rest"/>
+            <label for="@rest">@rest</label>
+            <br/>
+        }
+        <br/>
+        <input type="submit" value="Submit"/>
+</form>

@@ -39,7 +39,11 @@
                     
                 <div class="navbar-collapse d-flex flex-row-reverse">
                     <ul class="navbar-nav">
-                        
+                        @if (User.IsInRole("Admin"))
+                        {
+                            
+                            <a class="nav-link text-dark pull-right  active" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        }
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item dropdown">
@@ -57,11 +61,6 @@
                                 <a class="nav-link text-dark pull-right  active" asp-area="Identity" asp-page="/Account/Login" >Log In</a>
                             </li>
                         }
-                        else{
-                            <li class="nav-item">
-                                <a class="nav-link text-dark pull-right  active" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                            </li>
-                        }
                         
                     </ul>
                 </div>
@@ -72,11 +71,11 @@
         @RenderBody()
     </div>
 
-    <footer class="border-top footer text-muted">
+    @* <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - Catalog Museum - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
