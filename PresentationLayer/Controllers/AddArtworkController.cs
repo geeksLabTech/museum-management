@@ -37,6 +37,9 @@ namespace museum_management.Controllers{
                 artwork.MuseumRoom = addArtworkViewModel.MuseumRoom;
                 artwork.LendingToMuseums = new List<LendingToMuseum>();
                 artwork.Restaurations = new List<Restauration>();
+                artwork.ActualMuseumId = 3;
+                artwork.OriginMuseumId = 3;
+                
                 System.Console.WriteLine("datetime");
                 System.Console.WriteLine(artwork.EntryDate);
                 _uniOfWork.Artworks.Add(artwork);
